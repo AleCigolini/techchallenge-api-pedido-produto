@@ -1,0 +1,31 @@
+spring:
+  profiles:
+    active: dev
+  application:
+    name: techchallengeapipedidoproduto
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        ddl-auto: update
+  jackson:
+    deserialization:
+      fail-on-unknown-properties: true
+      fail-on-ignored-properties: true
+springdoc:
+  api-docs:
+    path: /api-docs
+  swagger-ui:
+    operationsSorter: alpha
+    docExpansion: none
+tag:
+  swagger:
+    produto:
+        name: "Produto"
+        description: "API de Produtos"
+    categoriaproduto:
+        name: "Categorias de Produto"
+        description: "API de Categorias de Produto"
+    pedido:
+      name: "Pedido"
+      description: "API de Pedidos"
