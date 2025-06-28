@@ -1,8 +1,8 @@
 package br.com.fiap.techchallengeapipedidoproduto.pedido.common.domain.entity;
 
-import br.com.fiap.techchallengeapipedidoproduto.cliente.common.domain.entity.JpaClienteEntity;
+//import br.com.fiap.techchallengeapipedidoproduto.cliente.common.domain.entity.JpaClienteEntity;
 import br.com.fiap.techchallengeapipedidoproduto.core.utils.entity.JpaBaseEntity;
-import br.com.fiap.techchallengeapipedidoproduto.pagamento.common.domain.entity.JpaPagamentoEntity;
+//import br.com.fiap.techchallengeapipedidoproduto.pagamento.common.domain.entity.JpaPagamentoEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -38,12 +38,12 @@ public class JpaPedidoEntity extends JpaBaseEntity {
     @Column(name = "observacao")
     private String observacao;
 
-    @OneToMany(mappedBy="pedido")
-    private List<JpaPagamentoEntity> pagamentos = new ArrayList<>();
+//    @OneToMany(mappedBy="pedido")
+//    private List<JpaPagamentoEntity> pagamentos = new ArrayList<>();
 
-    @ManyToOne
-    @JoinColumn(name="id_cliente")
-    private JpaClienteEntity cliente;
+//    @ManyToOne
+//    @JoinColumn(name="id_cliente")
+//    private JpaClienteEntity cliente;
 
     @OneToMany(mappedBy="pedido")
     private List<JpaProdutoPedidoEntity> produtos = new ArrayList<>();
