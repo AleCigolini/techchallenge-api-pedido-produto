@@ -1,7 +1,7 @@
 package br.com.fiap.techchallengeapipedidoproduto.pedido.common.domain.dto.response;
 
-import br.com.fiap.techchallengeapipedidoproduto.cliente.common.domain.dto.response.ClienteResponseDto;
-import br.com.fiap.techchallengeapipedidoproduto.pagamento.common.domain.dto.response.PagamentoResponseDto;
+//import br.com.fiap.techchallengeapipedidoproduto.cliente.common.domain.dto.response.ClienteResponseDto;
+//import br.com.fiap.techchallengeapipedidoproduto.pagamento.common.domain.dto.response.PagamentoResponseDto;
 import br.com.fiap.techchallengeapipedidoproduto.pedido.domain.StatusPedidoEnum;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
@@ -19,8 +19,8 @@ public class PedidoResponseDto {
     @Schema(description = "Código do pedido")
     private String codigo;
 
-    @Schema(description = "Cliente do pedido")
-    private ClienteResponseDto cliente;
+//    @Schema(description = "Cliente do pedido")
+//    private ClienteResponseDto cliente;
 
     @Schema(description = "Status do pedido")
     private StatusPedidoEnum status;
@@ -37,6 +37,6 @@ public class PedidoResponseDto {
     @Schema(description = "Produtos do pedido")
     private List<ProdutoPedidoResponseDto> produtos;
 
-    @Schema(description = "Pagamentos do pedido")
-    private List<PagamentoResponseDto> pagamentos;
+//    @Schema(description = "Pagamentos do pedido")
+//    private List<PagamentoResponseDto> pagamentos;
 }
