@@ -32,6 +32,7 @@ import br.com.fiap.techchallengeapipedidoproduto.pedido.common.domain.dto.reques
 import br.com.fiap.techchallengeapipedidoproduto.pedido.common.domain.dto.request.WebhookNotificationRequestDto;
 import br.com.fiap.techchallengeapipedidoproduto.pedido.common.domain.dto.response.PedidoResponseDto;
 import br.com.fiap.techchallengeapipedidoproduto.pedido.common.interfaces.PedidoDatabase;
+import br.com.fiap.techchallengeapipedidoproduto.pedido.domain.Pedido;
 import br.com.fiap.techchallengeapipedidoproduto.pedido.domain.StatusPedidoEnum;
 import br.com.fiap.techchallengeapipedidoproduto.pedido.infrastructure.client.mercadopago.MercadoPagoCodigoQRClient;
 import br.com.fiap.techchallengeapipedidoproduto.pedido.infrastructure.client.mercadopago.MercadoPagoMerchantOrdersClient;
@@ -91,26 +92,25 @@ public class PedidoControllerImpl implements PedidoController {
 
     @Override
     public List<PedidoResponseDto> buscarPedidos(List<String> status) {
-        List<StatusPedidoEnum> statusPedidoEnums =
-                status == null || status.isEmpty() ?
-                        null : pedidoPresenter.statusPedidoParaStatusPedidoEnums(status);
+        List<StatusPedidoEnum> statusPedidoEnums = status == null || status.isEmpty() ? null : pedidoPresenter.statusPedidoParaStatusPedidoEnums(status);
 
-        return pedidoPresenter.pedidosParaPedidoResponseDTOs(
-                consultarPedidoUseCase.buscarPedidos(statusPedidoEnums));
+        List<Pedido> pedidos = consultarPedidoUseCase.buscarPedidos(statusPedidoEnums);
+
+        return pedidoPresenter.pedidosParaPedidoResponseDTOs(pedidos);
     }
 
     @Override
     public PedidoResponseDto criarPedido(PedidoRequestDto pedidoRequestDto) {
-        return pedidoPresenter.pedidoParaPedidoResponseDTO(
-                salvarPedidoUseCase.criarPedido(
-                        requestPedidoMapper.pedidoRequestDtoParaPedido(pedidoRequestDto)));
+        Pedido pedido = salvarPedidoUseCase.criarPedido(requestPedidoMapper.pedidoRequestDtoParaPedido(pedidoRequestDto));
+
+        return pedidoPresenter.pedidoParaPedidoResponseDTO(pedido);
     }
 
     @Override
     public PedidoResponseDto atualizarStatusPedido(PedidoStatusRequestDto pedidoStatusRequestDTO, String id) {
-        return pedidoPresenter.pedidoParaPedidoResponseDTO(
-                salvarPedidoUseCase.atualizarStatusPedido(
-                        pedidoPresenter.statusPedidoParaStatusPedidoEnum(pedidoStatusRequestDTO.getStatus()), id));
+        Pedido pedido = salvarPedidoUseCase.atualizarStatusPedido(pedidoPresenter.statusPedidoParaStatusPedidoEnum(pedidoStatusRequestDTO.getStatus()), id);
+
+        return pedidoPresenter.pedidoParaPedidoResponseDTO(pedido);
     }
 
     @Override
