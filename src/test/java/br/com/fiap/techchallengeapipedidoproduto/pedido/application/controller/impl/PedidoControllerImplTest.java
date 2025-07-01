@@ -1,7 +1,6 @@
-package br.com.fiap.techchallengeapipedidoproduto.pedido.application.controller;
+package br.com.fiap.techchallengeapipedidoproduto.pedido.application.controller.impl;
 
 import br.com.fiap.techchallengeapipedidoproduto.core.config.properties.MercadoPagoProperties;
-import br.com.fiap.techchallengeapipedidoproduto.pedido.application.controller.impl.PedidoControllerImpl;
 import br.com.fiap.techchallengeapipedidoproduto.pedido.application.mapper.DatabasePedidoMapper;
 import br.com.fiap.techchallengeapipedidoproduto.pedido.application.mapper.RequestPedidoMapper;
 import br.com.fiap.techchallengeapipedidoproduto.pedido.application.presenter.PedidoPresenter;
