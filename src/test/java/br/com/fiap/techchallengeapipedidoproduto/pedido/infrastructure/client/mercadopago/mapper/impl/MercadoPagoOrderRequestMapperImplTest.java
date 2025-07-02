@@ -52,7 +52,7 @@ public class MercadoPagoOrderRequestMapperImplTest {
         assertEquals(2, items.size());
 
         // Verificar primeiro item
-        MercadoPagoOrderItemRequest primeiroItem = items.get(0);
+        MercadoPagoOrderItemRequest primeiroItem = items.getFirst();
         assertEquals("1", primeiroItem.getSkuNumber());
         assertEquals("Lanche", primeiroItem.getCategory());
         assertEquals("X-Burguer", primeiroItem.getTitle());
@@ -105,7 +105,7 @@ public class MercadoPagoOrderRequestMapperImplTest {
         produtoPedido.setQuantidade(1L);
         produtoPedido.setObservacao("Sem cebola");
 
-        pedido.setProdutos(Arrays.asList(produtoPedido));
+        pedido.setProdutos(List.of(produtoPedido));
 
         // when
         MercadoPagoOrderRequest resultado = mapper.pedidoParaMercadoPagoOrderItemRequest(pedido);
@@ -121,7 +121,7 @@ public class MercadoPagoOrderRequestMapperImplTest {
         List<MercadoPagoOrderItemRequest> items = resultado.getItems();
         assertEquals(1, items.size());
 
-        MercadoPagoOrderItemRequest item = items.get(0);
+        MercadoPagoOrderItemRequest item = items.getFirst();
         assertEquals("1", item.getSkuNumber());
         assertEquals("Lanche", item.getCategory());
         assertEquals("X-Burguer", item.getTitle());
