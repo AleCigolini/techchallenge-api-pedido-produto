@@ -4,11 +4,12 @@ import br.com.fiap.techchallengeapipedidoproduto.core.config.properties.MercadoP
 import br.com.fiap.techchallengeapipedidoproduto.pedido.domain.Pedido;
 import br.com.fiap.techchallengeapipedidoproduto.pedido.infrastructure.client.mercadopago.MercadoPagoCodigoQRClient;
 import br.com.fiap.techchallengeapipedidoproduto.pedido.infrastructure.client.mercadopago.mapper.MercadoPagoOrderRequestMapper;
-import br.com.fiap.techchallengeapipedidoproduto.pedido.infrastructure.client.mercadopago.request.MercadoPagoOrderItemRequest;
-import br.com.fiap.techchallengeapipedidoproduto.pedido.infrastructure.client.mercadopago.request.MercadoPagoOrderRequest;
 
 import java.math.BigDecimal;
 import java.util.List;
+
+import br.com.fiap.techchallengeapipedidoproduto.pedido.infrastructure.client.mercadopago.request.MercadoPagoOrderItemRequest;
+import br.com.fiap.techchallengeapipedidoproduto.pedido.infrastructure.client.mercadopago.request.MercadoPagoOrderRequest;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
