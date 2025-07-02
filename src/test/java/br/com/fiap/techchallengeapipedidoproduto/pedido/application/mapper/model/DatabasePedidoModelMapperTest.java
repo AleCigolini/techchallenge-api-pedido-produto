@@ -1,17 +1,18 @@
-package br.com.fiap.techchallengeapipedidoproduto.pedido.application.controller.mapper.model;
+package br.com.fiap.techchallengeapipedidoproduto.pedido.application.mapper.model;
 
-import br.com.fiap.techchallengeapipedidoproduto.pedido.application.mapper.model.DatabasePedidoModelMapper;
 import br.com.fiap.techchallengeapipedidoproduto.pedido.common.domain.entity.JpaPedidoEntity;
 import br.com.fiap.techchallengeapipedidoproduto.pedido.domain.Pedido;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.modelmapper.ModelMapper;
+
 import java.util.Collections;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
