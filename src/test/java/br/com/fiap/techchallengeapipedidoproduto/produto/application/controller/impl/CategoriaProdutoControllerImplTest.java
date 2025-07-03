@@ -7,7 +7,7 @@ import br.com.fiap.techchallengeapipedidoproduto.produto.application.usecase.Sal
 import br.com.fiap.techchallengeapipedidoproduto.produto.common.dto.request.CategoriaProdutoRequestDTO;
 import br.com.fiap.techchallengeapipedidoproduto.produto.common.dto.response.CategoriaProdutoResponseDTO;
 import br.com.fiap.techchallengeapipedidoproduto.produto.domain.CategoriaProduto;
-import br.com.fiap.techchallengeapipedidoproduto.produto.infrastructure.database.adpater.CategoriaProdutoDatabase;
+import br.com.fiap.techchallengeapipedidoproduto.produto.infrastructure.database.adapter.CategoriaProdutoDatabase;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -25,8 +25,6 @@ import static org.mockito.Mockito.*;
 public class CategoriaProdutoControllerImplTest {
 
     private CategoriaProdutoControllerImpl controller;
-    private ModelMapper modelMapper;
-    private CategoriaProdutoDatabase categoriaProdutoDatabase;
     private SalvarCategoriaProdutoUseCase salvarCategoriaProdutoUseCase;
     private BuscarCategoriaProdutoUseCase buscarCategoriaProdutoUseCase;
     private CategoriaProdutoPresenter categoriaProdutoPresenter;
@@ -34,8 +32,8 @@ public class CategoriaProdutoControllerImplTest {
 
     @BeforeEach
     public void setUp() {
-        modelMapper = Mockito.mock(ModelMapper.class);
-        categoriaProdutoDatabase = Mockito.mock(CategoriaProdutoDatabase.class);
+        ModelMapper modelMapper = Mockito.mock(ModelMapper.class);
+        CategoriaProdutoDatabase categoriaProdutoDatabase = Mockito.mock(CategoriaProdutoDatabase.class);
         salvarCategoriaProdutoUseCase = Mockito.mock(SalvarCategoriaProdutoUseCase.class);
         buscarCategoriaProdutoUseCase = Mockito.mock(BuscarCategoriaProdutoUseCase.class);
         categoriaProdutoPresenter = Mockito.mock(CategoriaProdutoPresenter.class);
