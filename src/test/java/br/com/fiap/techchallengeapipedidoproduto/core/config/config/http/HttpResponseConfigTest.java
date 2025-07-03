@@ -6,8 +6,7 @@ import org.springframework.http.converter.HttpMessageConverter;
 
 import java.awt.image.BufferedImage;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class HttpResponseConfigTest {
 
@@ -20,6 +19,6 @@ public class HttpResponseConfigTest {
 
         // then
         assertNotNull(converter);
-        assertTrue(converter instanceof BufferedImageHttpMessageConverter);
+        assertInstanceOf(BufferedImageHttpMessageConverter.class, converter);
     }
 }
