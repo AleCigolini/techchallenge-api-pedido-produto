@@ -15,7 +15,6 @@ public class SwaggerRedirectControllerTest {
 
     @Test
     public void deveRedirecionarParaSwagger() {
-        // Teste direto do método
         String redirectUrl = controller.redirectToSwagger();
         assertEquals("redirect:/swagger-ui/index.html", redirectUrl, "O URL de redirecionamento deve apontar para a página do Swagger UI");
     }
