@@ -34,8 +34,6 @@ import static org.mockito.Mockito.when;
 public class ProdutoControllerImplTest {
 
     private ProdutoControllerImpl controller;
-    private ModelMapper modelMapper;
-    private ProdutoDatabase produtoDatabase;
     private CategoriaProdutoController categoriaProdutoController;
     private BuscarProdutoUseCase buscarProdutoUseCase;
     private SalvarProdutoUseCase salvarProdutoUseCase;
@@ -46,8 +44,8 @@ public class ProdutoControllerImplTest {
 
     @BeforeEach
     public void setUp() {
-        modelMapper = Mockito.mock(ModelMapper.class);
-        produtoDatabase = Mockito.mock(ProdutoDatabase.class);
+        ModelMapper modelMapper = Mockito.mock(ModelMapper.class);
+        ProdutoDatabase produtoDatabase = Mockito.mock(ProdutoDatabase.class);
         categoriaProdutoController = Mockito.mock(CategoriaProdutoController.class);
         buscarProdutoUseCase = Mockito.mock(BuscarProdutoUseCase.class);
         salvarProdutoUseCase = Mockito.mock(SalvarProdutoUseCase.class);
