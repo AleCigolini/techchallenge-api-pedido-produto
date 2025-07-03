@@ -78,7 +78,7 @@ public class ApiExceptionHandlerTest {
         // then
         assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
         assertNotNull(response.getBody());
-        assertTrue(response.getBody() instanceof Problema);
+        assertInstanceOf(Problema.class, response.getBody());
 
         Problema problema = (Problema) response.getBody();
         assertEquals(500, problema.getStatus());
@@ -96,7 +96,7 @@ public class ApiExceptionHandlerTest {
         // then
         assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
         assertNotNull(response.getBody());
-        assertTrue(response.getBody() instanceof Problema);
+        assertInstanceOf(Problema.class, response.getBody());
 
         Problema problema = (Problema) response.getBody();
         assertEquals(404, problema.getStatus());
@@ -114,7 +114,7 @@ public class ApiExceptionHandlerTest {
         // then
         assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
         assertNotNull(response.getBody());
-        assertTrue(response.getBody() instanceof Problema);
+        assertInstanceOf(Problema.class, response.getBody());
 
         Problema problema = (Problema) response.getBody();
         assertEquals(400, problema.getStatus());
@@ -132,7 +132,7 @@ public class ApiExceptionHandlerTest {
         // then
         assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
         assertNotNull(response.getBody());
-        assertTrue(response.getBody() instanceof Problema);
+        assertInstanceOf(Problema.class, response.getBody());
 
         Problema problema = (Problema) response.getBody();
         assertEquals(400, problema.getStatus());
@@ -150,7 +150,7 @@ public class ApiExceptionHandlerTest {
         // then
         assertEquals(HttpStatus.CONFLICT, response.getStatusCode());
         assertNotNull(response.getBody());
-        assertTrue(response.getBody() instanceof Problema);
+        assertInstanceOf(Problema.class, response.getBody());
 
         Problema problema = (Problema) response.getBody();
         assertEquals(409, problema.getStatus());
@@ -201,8 +201,8 @@ public class ApiExceptionHandlerTest {
         assertEquals(400, problema.getStatus());
         assertNotNull(problema.getListaErroAtributos());
         assertEquals(1, problema.getListaErroAtributos().size());
-        assertEquals("campo", problema.getListaErroAtributos().get(0).getNomeAtributo());
-        assertEquals("mensagem traduzida", problema.getListaErroAtributos().get(0).getMensagemErro());
+        assertEquals("campo", problema.getListaErroAtributos().getFirst().getNomeAtributo());
+        assertEquals("mensagem traduzida", problema.getListaErroAtributos().getFirst().getMensagemErro());
     }
 
     @Test
@@ -297,7 +297,7 @@ public class ApiExceptionHandlerTest {
     }
 
     @Test
-    public void deveUsarHandleValidationInternal() throws Exception {
+    public void deveUsarHandleValidationInternal() {
         // arrange
         Exception exception = new Exception("Teste");
         BindingResult bindingResult = mock(BindingResult.class);
@@ -325,7 +325,7 @@ public class ApiExceptionHandlerTest {
     }
 
     @Test
-    public void deveUsarCreateProblemBuilder() throws Exception {
+    public void deveUsarCreateProblemBuilder() {
         // when
         Problema.ProblemaBuilder builder = ReflectionTestUtils.invokeMethod(apiExceptionHandler, 
                 "createProblemBuilder", HttpStatus.BAD_REQUEST, 
@@ -344,7 +344,7 @@ public class ApiExceptionHandlerTest {
     }
 
     @Test
-    public void deveUsarJoinPath() throws Exception {
+    public void deveUsarJoinPath() {
         // arrange
         Reference ref1 = new Reference(null, "campo1");
         Reference ref2 = new Reference(null, "campo2");
@@ -358,7 +358,7 @@ public class ApiExceptionHandlerTest {
     }
 
     @Test
-    public void deveRetornarStringVaziaQuandoReferencesVazio() throws Exception {
+    public void deveRetornarStringVaziaQuandoReferencesVazio() {
         // when
         String result = ReflectionTestUtils.invokeMethod(apiExceptionHandler, "joinPath", Collections.emptyList());
 
