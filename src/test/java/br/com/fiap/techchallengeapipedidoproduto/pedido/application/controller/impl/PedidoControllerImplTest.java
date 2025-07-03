@@ -16,7 +16,7 @@ import br.com.fiap.techchallengeapipedidoproduto.pedido.infrastructure.client.me
 import br.com.fiap.techchallengeapipedidoproduto.pedido.infrastructure.client.mercadopago.MercadoPagoMerchantOrdersClient;
 import br.com.fiap.techchallengeapipedidoproduto.pedido.infrastructure.client.mercadopago.mapper.MercadoPagoOrderRequestMapper;
 import br.com.fiap.techchallengeapipedidoproduto.produto.application.mapper.ProdutoMapper;
-import br.com.fiap.techchallengeapipedidoproduto.produto.infrastructure.database.adpater.ProdutoDatabase;
+import br.com.fiap.techchallengeapipedidoproduto.produto.infrastructure.database.adapter.ProdutoDatabase;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

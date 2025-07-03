@@ -42,7 +42,7 @@ import br.com.fiap.techchallengeapipedidoproduto.produto.application.gateway.imp
 import br.com.fiap.techchallengeapipedidoproduto.produto.application.mapper.ProdutoMapper;
 import br.com.fiap.techchallengeapipedidoproduto.produto.application.usecase.BuscarProdutoUseCase;
 import br.com.fiap.techchallengeapipedidoproduto.produto.application.usecase.impl.BuscarProdutoUseCaseImpl;
-import br.com.fiap.techchallengeapipedidoproduto.produto.infrastructure.database.adpater.ProdutoDatabase;
+import br.com.fiap.techchallengeapipedidoproduto.produto.infrastructure.database.adapter.ProdutoDatabase;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
