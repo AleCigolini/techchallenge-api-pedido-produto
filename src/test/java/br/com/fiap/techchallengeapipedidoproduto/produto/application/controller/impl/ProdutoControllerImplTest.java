@@ -11,7 +11,7 @@ import br.com.fiap.techchallengeapipedidoproduto.produto.common.dto.request.Prod
 import br.com.fiap.techchallengeapipedidoproduto.produto.common.dto.response.ProdutoResponseDTO;
 import br.com.fiap.techchallengeapipedidoproduto.produto.domain.CategoriaProduto;
 import br.com.fiap.techchallengeapipedidoproduto.produto.domain.Produto;
-import br.com.fiap.techchallengeapipedidoproduto.produto.infrastructure.database.adpater.ProdutoDatabase;
+import br.com.fiap.techchallengeapipedidoproduto.produto.infrastructure.database.adapter.ProdutoDatabase;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;

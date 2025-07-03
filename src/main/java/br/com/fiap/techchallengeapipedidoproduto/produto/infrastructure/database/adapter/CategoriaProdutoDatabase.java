@@ -1,4 +1,4 @@
-package br.com.fiap.techchallengeapipedidoproduto.produto.infrastructure.database.adpater;
+package br.com.fiap.techchallengeapipedidoproduto.produto.infrastructure.database.adapter;
 
 import br.com.fiap.techchallengeapipedidoproduto.produto.common.entity.JpaCategoriaProdutoEntity;
 

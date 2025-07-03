@@ -1,7 +1,7 @@
-package br.com.fiap.techchallengeapipedidoproduto.produto.infrastructure.database.adpater.impl;
+package br.com.fiap.techchallengeapipedidoproduto.produto.infrastructure.database.adapter.impl;
 
 import br.com.fiap.techchallengeapipedidoproduto.produto.common.entity.JpaCategoriaProdutoEntity;
-import br.com.fiap.techchallengeapipedidoproduto.produto.infrastructure.database.adpater.CategoriaProdutoDatabase;
+import br.com.fiap.techchallengeapipedidoproduto.produto.infrastructure.database.adapter.CategoriaProdutoDatabase;
 import br.com.fiap.techchallengeapipedidoproduto.produto.infrastructure.database.repository.JpaCategoriaProdutoRepository;
 import org.springframework.stereotype.Repository;
 

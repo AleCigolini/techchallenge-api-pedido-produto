@@ -7,7 +7,7 @@ import br.com.fiap.techchallengeapipedidoproduto.produto.application.usecase.Sal
 import br.com.fiap.techchallengeapipedidoproduto.produto.common.dto.request.CategoriaProdutoRequestDTO;
 import br.com.fiap.techchallengeapipedidoproduto.produto.common.dto.response.CategoriaProdutoResponseDTO;
 import br.com.fiap.techchallengeapipedidoproduto.produto.domain.CategoriaProduto;
-import br.com.fiap.techchallengeapipedidoproduto.produto.infrastructure.database.adpater.CategoriaProdutoDatabase;
+import br.com.fiap.techchallengeapipedidoproduto.produto.infrastructure.database.adapter.CategoriaProdutoDatabase;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;

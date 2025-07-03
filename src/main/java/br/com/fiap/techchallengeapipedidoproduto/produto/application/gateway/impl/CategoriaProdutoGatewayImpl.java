@@ -4,7 +4,7 @@ import br.com.fiap.techchallengeapipedidoproduto.produto.application.gateway.Cat
 import br.com.fiap.techchallengeapipedidoproduto.produto.application.mapper.CategoriaProdutoMapper;
 import br.com.fiap.techchallengeapipedidoproduto.produto.common.entity.JpaCategoriaProdutoEntity;
 import br.com.fiap.techchallengeapipedidoproduto.produto.domain.CategoriaProduto;
-import br.com.fiap.techchallengeapipedidoproduto.produto.infrastructure.database.adpater.CategoriaProdutoDatabase;
+import br.com.fiap.techchallengeapipedidoproduto.produto.infrastructure.database.adapter.CategoriaProdutoDatabase;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
