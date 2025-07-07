@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: java-app
+  name: java_app_pedido_produto
 spec:
   replicas: 1
   strategy:
@@ -11,14 +11,14 @@ spec:
       maxUnavailable: 0
   selector:
     matchLabels:
-      app: java-app
+      app: java_app_pedido_produto
   template:
     metadata:
       labels:
-        app: java-app
+        app: java_app_pedido_produto
     spec:
       containers:
-        - name: java-app
+        - name: java_app_pedido_produto
           image: alecigolini/fiap-techchallengeapipedidoproduto:latest
           ports:
             - containerPort: 8080
@@ -26,7 +26,7 @@ spec:
             - name: SPRING_PROFILES_ACTIVE
               value: prod
             - name: SPRING_DATASOURCE_URL
-              value: jdbc:postgresql://techchallenge-dev.postgres.database.azure.com:5432/postgres
+              value: jdbc:postgresql://techchallenge-pedido-produto-dev.postgres.database.azure.com:5432/postgres
             - name: SPRING_DATASOURCE_USERNAME
               valueFrom:
                 secretKeyRef:
@@ -85,44 +85,20 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: java-app
+  name: java_app_pedido_produto
 spec:
   ports:
     - protocol: TCP
       port: 80
       targetPort: 8080
   selector:
-    app: java-app
+    app: java_app_pedido_produto
   type: ClusterIP
----
-apiVersion: networking.k8s.io/v1
-kind: Ingress
-metadata:
-  name: java-app
-  annotations:
-    cert-manager.io/issuer: "letsencrypt-prod"
-    nginx.ingress.kubernetes.io/ssl-redirect: "true"
-spec:
-  ingressClassName: nginx
-  rules:
-    - http:
-        paths:
-          - path: /
-            pathType: Prefix
-            backend:
-              service:
-                name: java-app
-                port:
-                  number: 80
-  tls:
-    - hosts:
-        - techchallenge.app.br
-      secretName: meu-certificado-tls
 ---
 apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
-  name: java-app-hpa
+  name: java_app_pedido_produto-hpa
   namespace: default
 spec:
   maxReplicas: 3
@@ -130,7 +106,7 @@ spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind:  Deployment
-    name: java-app
+    name: java_app_pedido_produto
   metrics:
     - type: Resource
       resource:
