@@ -57,8 +57,7 @@ CREATE TABLE pedido
     observacao       VARCHAR(255)   NULL,
     cd_pagamento     VARCHAR(255)   NULL,
     data_criacao     TIMESTAMPTZ    NOT NULL DEFAULT NOW(),
-    data_atualizacao TIMESTAMPTZ    NOT NULL DEFAULT NOW(),
-    CONSTRAINT fk_pedido_id_cliente FOREIGN KEY (id_cliente) REFERENCES cliente (id)
+    data_atualizacao TIMESTAMPTZ    NOT NULL DEFAULT NOW()
 );
 CREATE INDEX ik_pedido_status ON pedido (status);
 
