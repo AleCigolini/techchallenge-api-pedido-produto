@@ -49,3 +49,6 @@ O projeto segue uma arquitetura moderna e organizada, contendo:
    docker-compose up
    ```
 4. Acesse `http://localhost:8080` e terá acesso ao Swagger da aplicação
+
+## Cobertura de Código
+![cobertura_codigo.png](assets/img/cobertura_codigo.png)
