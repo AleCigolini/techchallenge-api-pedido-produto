@@ -1,5 +1,7 @@
 package br.com.fiap.techchallengeapipedidoproduto.pedido.application.usecase.impl;
 
+import br.com.fiap.techchallengeapipedidoproduto.cliente.domain.Cliente;
+import br.com.fiap.techchallengeapipedidoproduto.cliente.usecase.ConsultarClienteUseCase;
 import br.com.fiap.techchallengeapipedidoproduto.pedido.application.gateway.PedidoGateway;
 import br.com.fiap.techchallengeapipedidoproduto.pedido.domain.Pedido;
 import br.com.fiap.techchallengeapipedidoproduto.pedido.domain.StatusPedidoEnum;
@@ -14,6 +16,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
 public class ConsultarPedidoUseCaseImplTest {
@@ -24,7 +27,10 @@ public class ConsultarPedidoUseCaseImplTest {
     @BeforeEach
     public void setUp() {
         pedidoGateway = Mockito.mock(PedidoGateway.class);
-        useCase = new ConsultarPedidoUseCaseImpl(pedidoGateway);
+        ConsultarClienteUseCase consultarClienteUseCase = Mockito.mock(ConsultarClienteUseCase.class);
+        useCase = new ConsultarPedidoUseCaseImpl(pedidoGateway, consultarClienteUseCase);
+
+        Mockito.when(consultarClienteUseCase.buscarClientePorId(anyString())).thenReturn(Mockito.mock(Cliente.class));
     }
 
     @AfterEach
@@ -35,7 +41,9 @@ public class ConsultarPedidoUseCaseImplTest {
     @Test
     public void deveBuscarTodosOsPedidos() {
         // given
-        List<Pedido> pedidosMock = Collections.singletonList(new Pedido());
+        Pedido pedido = new Pedido();
+        pedido.setCliente(Mockito.mock(Cliente.class));
+        List<Pedido> pedidosMock = Collections.singletonList(pedido);
         when(pedidoGateway.buscarPedidos(null)).thenReturn(pedidosMock);
 
         // when
@@ -51,7 +59,9 @@ public class ConsultarPedidoUseCaseImplTest {
     public void deveBuscarPedidosFiltradosPorStatus() {
         // given
         List<StatusPedidoEnum> statusFiltro = Arrays.asList(StatusPedidoEnum.ABERTO, StatusPedidoEnum.EM_PREPARACAO);
-        List<Pedido> pedidosMock = Arrays.asList(new Pedido(), new Pedido());
+        Pedido pedido = new Pedido();
+        pedido.setCliente(Mockito.mock(Cliente.class));
+        List<Pedido> pedidosMock = List.of(pedido);
         when(pedidoGateway.buscarPedidos(statusFiltro)).thenReturn(pedidosMock);
 
         // when
@@ -60,7 +70,7 @@ public class ConsultarPedidoUseCaseImplTest {
         // then
         assertNotNull(result);
         assertEquals(pedidosMock, result);
-        assertEquals(2, result.size());
+        assertEquals(1, result.size());
         Mockito.verify(pedidoGateway, Mockito.times(1)).buscarPedidos(statusFiltro);
     }
 

@@ -13,21 +13,6 @@ services:
     networks:
       - dev_network
 
-  flyway:
-    image: flyway/flyway
-    container_name: flyway_migration
-    depends_on:
-      - postgres
-    entrypoint: ["flyway", "migrate"]
-    environment:
-      FLYWAY_URL: jdbc:postgresql://postgres:5432/${POSTGRES_DB}
-      FLYWAY_USER: ${POSTGRES_USER}
-      FLYWAY_PASSWORD: ${POSTGRES_PASSWORD}
-    volumes:
-      - ./migration:/flyway/sql
-    networks:
-      - dev_network
-
   app:
     build:
       context: .
