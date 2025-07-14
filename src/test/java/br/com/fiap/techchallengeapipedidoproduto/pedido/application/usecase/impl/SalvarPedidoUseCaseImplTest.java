@@ -1,5 +1,6 @@
 package br.com.fiap.techchallengeapipedidoproduto.pedido.application.usecase.impl;
 
+import br.com.fiap.techchallengeapipedidoproduto.cliente.usecase.ConsultarClienteUseCase;
 import br.com.fiap.techchallengeapipedidoproduto.pedido.application.gateway.PedidoGateway;
 import br.com.fiap.techchallengeapipedidoproduto.pedido.application.usecase.CriarPedidoMercadoPagoUseCase;
 import br.com.fiap.techchallengeapipedidoproduto.pedido.common.domain.exception.PedidoNaoEncontradoException;
@@ -27,6 +28,7 @@ public class SalvarPedidoUseCaseImplTest {
     private PedidoGateway pedidoGateway;
     private BuscarProdutoUseCase buscarProdutoUseCase;
     private CriarPedidoMercadoPagoUseCase criarPedidoMercadoPagoUseCase;
+    private ConsultarClienteUseCase consultarClienteUseCase;
     private SalvarPedidoUseCaseImpl useCase;
 
     @BeforeEach
@@ -34,10 +36,12 @@ public class SalvarPedidoUseCaseImplTest {
         pedidoGateway = Mockito.mock(PedidoGateway.class);
         buscarProdutoUseCase = Mockito.mock(BuscarProdutoUseCase.class);
         criarPedidoMercadoPagoUseCase = Mockito.mock(CriarPedidoMercadoPagoUseCase.class);
+        consultarClienteUseCase = Mockito.mock(ConsultarClienteUseCase.class);
 
         useCase = new SalvarPedidoUseCaseImpl(
                 pedidoGateway,
                 buscarProdutoUseCase,
+                consultarClienteUseCase,
                 criarPedidoMercadoPagoUseCase
         );
     }

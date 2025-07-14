@@ -1,5 +1,6 @@
 package br.com.fiap.techchallengeapipedidoproduto.pedido.application.usecase.impl;
 
+import br.com.fiap.techchallengeapipedidoproduto.cliente.usecase.ConsultarClienteUseCase;
 import br.com.fiap.techchallengeapipedidoproduto.pedido.application.gateway.PedidoGateway;
 import br.com.fiap.techchallengeapipedidoproduto.pedido.domain.Pedido;
 import br.com.fiap.techchallengeapipedidoproduto.pedido.domain.StatusPedidoEnum;
@@ -19,12 +20,14 @@ import static org.mockito.Mockito.when;
 public class ConsultarPedidoUseCaseImplTest {
 
     private PedidoGateway pedidoGateway;
+    private ConsultarClienteUseCase consultarClienteUseCase;
     private ConsultarPedidoUseCaseImpl useCase;
 
     @BeforeEach
     public void setUp() {
         pedidoGateway = Mockito.mock(PedidoGateway.class);
-        useCase = new ConsultarPedidoUseCaseImpl(pedidoGateway);
+        consultarClienteUseCase = Mockito.mock(ConsultarClienteUseCase.class);
+        useCase = new ConsultarPedidoUseCaseImpl(pedidoGateway, consultarClienteUseCase);
     }
 
     @AfterEach

@@ -68,6 +68,7 @@ public class ProcessarPedidoMercadoPagoUseCaseImpl implements ProcessarPedidoUse
                 if (orderResponse.getStatus().equals("closed")) {
                     Pedido pedido = consultarPedidoUseCase.buscarPedidoPorId(orderResponse.getExternalReference());
 
+                    // TODO: CHAMAR API PARA SALVAR PAGAMENTO. USAR FEIGN?
 //                    Pagamento pagamento = new Pagamento();
 //                    pagamento.setPreco(pedido.getPreco());
 //                    pagamento.setCodigoPedido(pedido.getId());
