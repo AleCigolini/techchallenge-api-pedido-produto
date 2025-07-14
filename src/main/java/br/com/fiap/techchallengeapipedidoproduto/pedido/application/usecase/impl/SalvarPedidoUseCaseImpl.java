@@ -1,8 +1,6 @@
 package br.com.fiap.techchallengeapipedidoproduto.pedido.application.usecase.impl;
 
-//import br.com.fiap.techchallengeapipedidoproduto.cliente.application.usecase.ConsultarClienteUseCase;
-//import br.com.fiap.techchallengeapipedidoproduto.cliente.domain.Cliente;
-//import br.com.fiap.techchallengeapipedidoproduto.pagamento.application.usecase.SalvarPagamentoUseCase;
+import br.com.fiap.techchallengeapipedidoproduto.cliente.usecase.ConsultarClienteUseCase;
 import br.com.fiap.techchallengeapipedidoproduto.pedido.application.gateway.PedidoGateway;
 import br.com.fiap.techchallengeapipedidoproduto.pedido.application.usecase.CriarPedidoMercadoPagoUseCase;
 import br.com.fiap.techchallengeapipedidoproduto.pedido.application.usecase.SalvarPedidoUseCase;
@@ -23,20 +21,20 @@ import java.util.Random;
 public class SalvarPedidoUseCaseImpl implements SalvarPedidoUseCase {
 
     private final PedidoGateway pedidoGateway;
-//    private final ConsultarClienteUseCase consultarClienteUseCase;
+    private final ConsultarClienteUseCase consultarClienteUseCase;
     private final BuscarProdutoUseCase buscarProdutoUseCase;
 //    private final SalvarPagamentoUseCase salvarPagamentoUseCase;
     private final CriarPedidoMercadoPagoUseCase criarPedidoMercadoPagoUseCase;
 
     public SalvarPedidoUseCaseImpl(PedidoGateway pedidoGateway,
                                    BuscarProdutoUseCase buscarProdutoUseCase,
-//                                   ConsultarClienteUseCase consultarClienteUseCase,
+                                   ConsultarClienteUseCase consultarClienteUseCase,
 //                                   SalvarPagamentoUseCase salvarPagamentoUseCase,
                                    CriarPedidoMercadoPagoUseCase criarPedidoMercadoPagoUseCase
     ) {
         this.pedidoGateway = pedidoGateway;
         this.buscarProdutoUseCase = buscarProdutoUseCase;
-//        this.consultarClienteUseCase = consultarClienteUseCase;
+        this.consultarClienteUseCase = consultarClienteUseCase;
 //        this.salvarPagamentoUseCase = salvarPagamentoUseCase;
         this.criarPedidoMercadoPagoUseCase = criarPedidoMercadoPagoUseCase;
     }
@@ -50,6 +48,7 @@ public class SalvarPedidoUseCaseImpl implements SalvarPedidoUseCase {
 
         boolean criouPedidoMercadoPago = criarPedidoMercadoPagoUseCase.criarPedidoMercadoPago(pedidoCriado);
 
+        // TODO: CHAMAR API PARA SALVAR PAGAMENTO COMO PENDENTE. USAR FEIGN?
 //        salvarPagamentoUseCase.criarPagamentoPendenteParaOPedido(pedidoCriado, criouPedidoMercadoPago);
 
         return pedidoCriado;
@@ -80,10 +79,10 @@ public class SalvarPedidoUseCaseImpl implements SalvarPedidoUseCase {
 
     public void montarPedido(Pedido pedido) {
 
-//        if (pedido.getCliente() != null) {
-//            Cliente cliente = consultarClienteUseCase.buscarClientePorCpf(pedido.getCliente().getCpf());
-//            pedido.setCliente(cliente);
-//        }
+        if (pedido.getCliente() != null) {
+            var cliente = consultarClienteUseCase.buscarClientePorCpf(pedido.getCliente().getCpf());
+            pedido.setCliente(cliente);
+        }
 
         List<ProdutoPedido> produtos = new ArrayList<>();
         ProdutoPedido produtoPedido;

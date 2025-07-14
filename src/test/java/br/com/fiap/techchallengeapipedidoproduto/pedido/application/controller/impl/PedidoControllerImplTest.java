@@ -1,5 +1,6 @@
 package br.com.fiap.techchallengeapipedidoproduto.pedido.application.controller.impl;
 
+import br.com.fiap.techchallengeapipedidoproduto.cliente.infrastructure.client.ClienteClient;
 import br.com.fiap.techchallengeapipedidoproduto.core.config.properties.MercadoPagoProperties;
 import br.com.fiap.techchallengeapipedidoproduto.pedido.application.mapper.DatabasePedidoMapper;
 import br.com.fiap.techchallengeapipedidoproduto.pedido.application.mapper.RequestPedidoMapper;
@@ -50,6 +51,7 @@ public class PedidoControllerImplTest {
         MercadoPagoCodigoQRClient mercadoPagoCodigoQRClient = Mockito.mock(MercadoPagoCodigoQRClient.class);
         MercadoPagoMerchantOrdersClient mercadoPagoMerchantOrdersClient = Mockito.mock(MercadoPagoMerchantOrdersClient.class);
         MercadoPagoProperties mercadoPagoProperties = Mockito.mock(MercadoPagoProperties.class);
+        ClienteClient clienteClient = Mockito.mock(ClienteClient.class);
 
         controller = new PedidoControllerImpl(
                 pedidoDatabase,
@@ -61,7 +63,8 @@ public class PedidoControllerImplTest {
                 pedidoPresenter,
                 mercadoPagoCodigoQRClient,
                 mercadoPagoMerchantOrdersClient,
-                mercadoPagoProperties
+                mercadoPagoProperties,
+                clienteClient
         );
 
         ReflectionTestUtils.setField(controller, "consultarPedidoUseCase", consultarPedidoUseCase);
