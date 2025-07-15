@@ -1,4 +1,4 @@
-package br.com.fiap.techchallengeapipedidoproduto.cliente.usecase;
+package br.com.fiap.techchallengeapipedidoproduto.cliente.application.usecase;
 
 import br.com.fiap.techchallengeapipedidoproduto.cliente.domain.Cliente;
 

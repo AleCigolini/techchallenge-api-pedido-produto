@@ -1,9 +1,8 @@
 package br.com.fiap.techchallengeapipedidoproduto.pedido.application.usecase.impl;
 
 import br.com.fiap.techchallengeapipedidoproduto.core.config.properties.MercadoPagoProperties;
-//import br.com.fiap.techchallengeapipedidoproduto.pagamento.application.usecase.SalvarPagamentoUseCase;
-//import br.com.fiap.techchallengeapipedidoproduto.pagamento.domain.Pagamento;
-//import br.com.fiap.techchallengeapipedidoproduto.pagamento.domain.StatusPagamentoEnum;
+import br.com.fiap.techchallengeapipedidoproduto.pagamento.application.usecase.SalvarPagamentoUseCase;
+import br.com.fiap.techchallengeapipedidoproduto.pagamento.domain.Pagamento;
 import br.com.fiap.techchallengeapipedidoproduto.pedido.application.usecase.ConsultarPedidoUseCase;
 import br.com.fiap.techchallengeapipedidoproduto.pedido.application.usecase.ProcessarPedidoUseCase;
 import br.com.fiap.techchallengeapipedidoproduto.pedido.application.usecase.SalvarPedidoUseCase;
@@ -18,20 +17,20 @@ import java.util.LinkedHashMap;
 
 public class ProcessarPedidoMercadoPagoUseCaseImpl implements ProcessarPedidoUseCase {
 
-//    private final SalvarPagamentoUseCase salvarPagamentoUseCase;
+    private final SalvarPagamentoUseCase salvarPagamentoUseCase;
     private final ConsultarPedidoUseCase consultarPedidoUseCase;
     private final SalvarPedidoUseCase salvarPedidoUseCase;
     private final MercadoPagoMerchantOrdersClient mercadoPagoMerchantOrdersClient;
     private final MercadoPagoProperties mercadoPagoProperties;
 
     public ProcessarPedidoMercadoPagoUseCaseImpl(
-//            SalvarPagamentoUseCase salvarPagamentoUseCase,
+            SalvarPagamentoUseCase salvarPagamentoUseCase,
             ConsultarPedidoUseCase consultarPedidoUseCase,
             SalvarPedidoUseCase salvarPedidoUseCase,
             MercadoPagoMerchantOrdersClient mercadoPagoMerchantOrdersClient,
             MercadoPagoProperties mercadoPagoProperties
     ) {
-//        this.salvarPagamentoUseCase = salvarPagamentoUseCase;
+        this.salvarPagamentoUseCase = salvarPagamentoUseCase;
         this.consultarPedidoUseCase = consultarPedidoUseCase;
         this.salvarPedidoUseCase = salvarPedidoUseCase;
         this.mercadoPagoMerchantOrdersClient = mercadoPagoMerchantOrdersClient;
@@ -68,12 +67,11 @@ public class ProcessarPedidoMercadoPagoUseCaseImpl implements ProcessarPedidoUse
                 if (orderResponse.getStatus().equals("closed")) {
                     Pedido pedido = consultarPedidoUseCase.buscarPedidoPorId(orderResponse.getExternalReference());
 
-                    // TODO: CHAMAR API PARA SALVAR PAGAMENTO. USAR FEIGN?
-//                    Pagamento pagamento = new Pagamento();
-//                    pagamento.setPreco(pedido.getPreco());
-//                    pagamento.setCodigoPedido(pedido.getId());
-//                    pagamento.setStatus(StatusPagamentoEnum.APROVADO.toString());
-//                    salvarPagamentoUseCase.salvarPagamento(pagamento);
+                    Pagamento pagamento = new Pagamento();
+                    pagamento.setPreco(pedido.getPreco());
+                    pagamento.setCodigoPedido(pedido.getId());
+                    pagamento.setStatus("APROVADO");
+                    salvarPagamentoUseCase.salvarPagamento(pagamento);
 
                     pedido.setStatus(StatusPedidoEnum.RECEBIDO.toString());
                     pedido.setCodigoPagamento(orderResponse.getId().toString());

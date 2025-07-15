@@ -1,6 +1,7 @@
 package br.com.fiap.techchallengeapipedidoproduto.pedido.application.usecase.impl;
 
 import br.com.fiap.techchallengeapipedidoproduto.core.config.properties.MercadoPagoProperties;
+import br.com.fiap.techchallengeapipedidoproduto.pagamento.application.usecase.SalvarPagamentoUseCase;
 import br.com.fiap.techchallengeapipedidoproduto.pedido.application.usecase.ConsultarPedidoUseCase;
 import br.com.fiap.techchallengeapipedidoproduto.pedido.application.usecase.SalvarPedidoUseCase;
 import br.com.fiap.techchallengeapipedidoproduto.pedido.common.domain.dto.request.WebhookDataRequestDto;
@@ -28,7 +29,8 @@ public class ProcessarPedidoMercadoPagoUseCaseImplTest {
     private SalvarPedidoUseCase salvarPedidoUseCase;
     private MercadoPagoMerchantOrdersClient mercadoPagoMerchantOrdersClient;
     private MercadoPagoProperties mercadoPagoProperties;
-    private ProcessarPedidoMercadoPagoUseCaseImpl useCase;
+    private ProcessarPedidoMercadoPagoUseCaseImpl processarPedidoMercadoPagoUseCase;
+    private SalvarPagamentoUseCase salvarPagamentoUseCase;
 
     @BeforeEach
     public void setUp() {
@@ -36,8 +38,11 @@ public class ProcessarPedidoMercadoPagoUseCaseImplTest {
         salvarPedidoUseCase = Mockito.mock(SalvarPedidoUseCase.class);
         mercadoPagoMerchantOrdersClient = Mockito.mock(MercadoPagoMerchantOrdersClient.class);
         mercadoPagoProperties = Mockito.mock(MercadoPagoProperties.class);
+        mercadoPagoProperties = Mockito.mock(MercadoPagoProperties.class);
+        salvarPagamentoUseCase = Mockito.mock(SalvarPagamentoUseCase.class);
 
-        useCase = new ProcessarPedidoMercadoPagoUseCaseImpl(
+        processarPedidoMercadoPagoUseCase = new ProcessarPedidoMercadoPagoUseCaseImpl(
+                salvarPagamentoUseCase,
                 consultarPedidoUseCase,
                 salvarPedidoUseCase,
                 mercadoPagoMerchantOrdersClient,
@@ -84,7 +89,7 @@ public class ProcessarPedidoMercadoPagoUseCaseImplTest {
         when(salvarPedidoUseCase.atualizarPedido(any(Pedido.class))).thenReturn(pedido);
 
         // when
-        useCase.processarNotificacao(notificacao);
+        processarPedidoMercadoPagoUseCase.processarNotificacao(notificacao);
 
         // then
         verify(mercadoPagoMerchantOrdersClient).obterPagamento(notificacao.getId(), mercadoPagoProperties.getAuthHeader());
@@ -111,7 +116,7 @@ public class ProcessarPedidoMercadoPagoUseCaseImplTest {
                 .thenReturn(responseEntity);
 
         // when
-        useCase.processarNotificacao(notificacao);
+        processarPedidoMercadoPagoUseCase.processarNotificacao(notificacao);
 
         // then
         verify(mercadoPagoMerchantOrdersClient).obterPagamento(notificacao.getId(), mercadoPagoProperties.getAuthHeader());
@@ -131,7 +136,7 @@ public class ProcessarPedidoMercadoPagoUseCaseImplTest {
                 .thenReturn(responseEntity);
 
         // when
-        useCase.processarNotificacao(notificacao);
+        processarPedidoMercadoPagoUseCase.processarNotificacao(notificacao);
 
         // then
         verify(mercadoPagoMerchantOrdersClient).obterPagamento(notificacao.getId(), mercadoPagoProperties.getAuthHeader());
@@ -149,7 +154,7 @@ public class ProcessarPedidoMercadoPagoUseCaseImplTest {
                 .when(mercadoPagoMerchantOrdersClient).obterPagamento(anyString(), anyString());
 
         // when
-        useCase.processarNotificacao(notificacao);
+        processarPedidoMercadoPagoUseCase.processarNotificacao(notificacao);
 
         // then
         verify(mercadoPagoMerchantOrdersClient).obterPagamento(notificacao.getId(), mercadoPagoProperties.getAuthHeader());
@@ -182,7 +187,7 @@ public class ProcessarPedidoMercadoPagoUseCaseImplTest {
         when(consultarPedidoUseCase.buscarPedidoPorId("pedido-123")).thenReturn(pedido);
 
         // when
-        useCase.processarNotificacao(notificacao);
+        processarPedidoMercadoPagoUseCase.processarNotificacao(notificacao);
 
         // then
         verify(salvarPedidoUseCase).atualizarPedido(any(Pedido.class));
