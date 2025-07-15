@@ -6,7 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 
-@FeignClient(name = "ClienteClient", url = "http://locahost:8080/clientes")
+@FeignClient(name = "ClienteClient", url = "${client.cliente.base-url}")
 public interface ClienteClient {
 
     @GetMapping("/cpf")

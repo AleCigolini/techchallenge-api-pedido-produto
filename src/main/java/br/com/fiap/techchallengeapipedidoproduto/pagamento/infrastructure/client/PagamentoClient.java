@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 
-@FeignClient(name = "PagamentoClient", url = "http://locahost:8080/pagamentos")
+@FeignClient(name = "PagamentoClient", url = "${client.pagamento.base-url}")
 public interface PagamentoClient {
 
     @PostMapping("/salvar")
@@ -20,5 +20,5 @@ public interface PagamentoClient {
     @PostMapping("/salvar-pagamento-pendente")
     void criarPagamentoPendenteParaOPedido(@RequestBody PagamentoPendenteRequestDTO pagamentoPendenteRequestDTO);
 
-    ResponseEntity<List<Pagamento>> buscarPagamentosPorPedido(String idPedido);
+    ResponseEntity<List<Pagamento>> buscarPagamentosPorPedido(@RequestBody String idPedido);
 }
