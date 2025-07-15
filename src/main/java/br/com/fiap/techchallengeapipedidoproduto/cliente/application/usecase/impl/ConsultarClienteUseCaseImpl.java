@@ -1,8 +1,8 @@
-package br.com.fiap.techchallengeapipedidoproduto.cliente.usecase.impl;
+package br.com.fiap.techchallengeapipedidoproduto.cliente.application.usecase.impl;
 
 import br.com.fiap.techchallengeapipedidoproduto.cliente.domain.Cliente;
 import br.com.fiap.techchallengeapipedidoproduto.cliente.infrastructure.client.ClienteClient;
-import br.com.fiap.techchallengeapipedidoproduto.cliente.usecase.ConsultarClienteUseCase;
+import br.com.fiap.techchallengeapipedidoproduto.cliente.application.usecase.ConsultarClienteUseCase;
 
 public class ConsultarClienteUseCaseImpl implements ConsultarClienteUseCase {
     private final ClienteClient clienteClient;

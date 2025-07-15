@@ -10,6 +10,10 @@ spring:
     password: "postgres"
     driver-class-name: org.postgresql.Driver
 client:
+  pagamento:
+    base-url: "http://localhost:8080/pagamentos"
+  cliente:
+    base-url: "http://localhost:8080/clientes"
   mercado-pago:
     user_id: 123456
     pos_id: 123456

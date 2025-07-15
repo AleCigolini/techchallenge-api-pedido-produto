@@ -1,6 +1,7 @@
 package br.com.fiap.techchallengeapipedidoproduto.pedido.application.usecase.impl;
 
-import br.com.fiap.techchallengeapipedidoproduto.cliente.usecase.ConsultarClienteUseCase;
+import br.com.fiap.techchallengeapipedidoproduto.cliente.application.usecase.ConsultarClienteUseCase;
+import br.com.fiap.techchallengeapipedidoproduto.pagamento.application.usecase.SalvarPagamentoUseCase;
 import br.com.fiap.techchallengeapipedidoproduto.pedido.application.gateway.PedidoGateway;
 import br.com.fiap.techchallengeapipedidoproduto.pedido.application.usecase.CriarPedidoMercadoPagoUseCase;
 import br.com.fiap.techchallengeapipedidoproduto.pedido.common.domain.exception.PedidoNaoEncontradoException;
@@ -28,20 +29,21 @@ public class SalvarPedidoUseCaseImplTest {
     private PedidoGateway pedidoGateway;
     private BuscarProdutoUseCase buscarProdutoUseCase;
     private CriarPedidoMercadoPagoUseCase criarPedidoMercadoPagoUseCase;
-    private ConsultarClienteUseCase consultarClienteUseCase;
-    private SalvarPedidoUseCaseImpl useCase;
+    private SalvarPedidoUseCaseImpl salvarPedidoUseCase;
 
     @BeforeEach
     public void setUp() {
         pedidoGateway = Mockito.mock(PedidoGateway.class);
         buscarProdutoUseCase = Mockito.mock(BuscarProdutoUseCase.class);
         criarPedidoMercadoPagoUseCase = Mockito.mock(CriarPedidoMercadoPagoUseCase.class);
-        consultarClienteUseCase = Mockito.mock(ConsultarClienteUseCase.class);
+        ConsultarClienteUseCase consultarClienteUseCase = Mockito.mock(ConsultarClienteUseCase.class);
+        SalvarPagamentoUseCase salvarPagamentoUseCase = Mockito.mock(SalvarPagamentoUseCase.class);
 
-        useCase = new SalvarPedidoUseCaseImpl(
+        salvarPedidoUseCase = new SalvarPedidoUseCaseImpl(
                 pedidoGateway,
                 buscarProdutoUseCase,
                 consultarClienteUseCase,
+                salvarPagamentoUseCase,
                 criarPedidoMercadoPagoUseCase
         );
     }
@@ -79,7 +81,7 @@ public class SalvarPedidoUseCaseImplTest {
         when(criarPedidoMercadoPagoUseCase.criarPedidoMercadoPago(any(Pedido.class))).thenReturn(Boolean.TRUE);
 
         // when
-        Pedido resultado = useCase.criarPedido(pedido);
+        Pedido resultado = salvarPedidoUseCase.criarPedido(pedido);
 
         // then
         assertNotNull(resultado);
@@ -112,7 +114,7 @@ public class SalvarPedidoUseCaseImplTest {
         when(pedidoGateway.salvarPedido(any(Pedido.class))).thenReturn(pedidoExistente);
 
         // when
-        Pedido resultado = useCase.atualizarPedido(pedidoAtualizado);
+        Pedido resultado = salvarPedidoUseCase.atualizarPedido(pedidoAtualizado);
 
         // then
         assertNotNull(resultado);
@@ -143,7 +145,7 @@ public class SalvarPedidoUseCaseImplTest {
         when(pedidoGateway.buscarPedidoPorId("pedido-nao-existente")).thenReturn(null);
 
         // when/then
-        assertThrows(PedidoNaoEncontradoException.class, () -> useCase.atualizarPedido(pedidoAtualizar));
+        assertThrows(PedidoNaoEncontradoException.class, () -> salvarPedidoUseCase.atualizarPedido(pedidoAtualizar));
     }
 
     @Test
@@ -161,7 +163,7 @@ public class SalvarPedidoUseCaseImplTest {
         when(pedidoGateway.salvarPedido(any(Pedido.class))).thenReturn(pedidoExistente);
 
         // when
-        Pedido resultado = useCase.atualizarStatusPedido(novoStatus, idPedido);
+        Pedido resultado = salvarPedidoUseCase.atualizarStatusPedido(novoStatus, idPedido);
 
         // then
         assertNotNull(resultado);
@@ -216,7 +218,7 @@ public class SalvarPedidoUseCaseImplTest {
         when(buscarProdutoUseCase.buscarProdutoPorId("2")).thenReturn(produtoCompleto2);
 
         // when
-        useCase.montarPedido(pedido);
+        salvarPedidoUseCase.montarPedido(pedido);
 
         // then
         assertNotNull(pedido.getCodigo());

@@ -15,7 +15,10 @@ public class DatabasePedidoModelMapper implements DatabasePedidoMapper {
     private ModelMapper modelMapper;
 
     public JpaPedidoEntity pedidoParaJpaPedidoEntity(Pedido pedido) {
-        return modelMapper.map(pedido, JpaPedidoEntity.class);
+        JpaPedidoEntity jpaPedidoEntity = modelMapper.map(pedido, JpaPedidoEntity.class);
+        jpaPedidoEntity.setIdCliente(pedido.getCliente().getId());
+
+        return jpaPedidoEntity;
     }
 
     public Pedido jpaPedidoEntityParaPedido(JpaPedidoEntity jpaPedidoEntity) {

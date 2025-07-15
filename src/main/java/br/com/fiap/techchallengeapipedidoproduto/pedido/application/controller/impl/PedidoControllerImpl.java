@@ -1,21 +1,14 @@
 package br.com.fiap.techchallengeapipedidoproduto.pedido.application.controller.impl;
 
-//import br.com.fiap.techchallengeapipedidoproduto.cliente.application.gateway.ClienteGateway;
-//import br.com.fiap.techchallengeapipedidoproduto.cliente.application.gateway.impl.ClienteGatewayImpl;
-//import br.com.fiap.techchallengeapipedidoproduto.cliente.application.mapper.DatabaseClienteMapper;
-//import br.com.fiap.techchallengeapipedidoproduto.cliente.application.usecase.ConsultarClienteUseCase;
-//import br.com.fiap.techchallengeapipedidoproduto.cliente.application.usecase.impl.ConsultarClienteUseCaseImpl;
-//import br.com.fiap.techchallengeapipedidoproduto.cliente.common.interfaces.ClienteDatabase;
+import br.com.fiap.techchallengeapipedidoproduto.cliente.application.usecase.ConsultarClienteUseCase;
+import br.com.fiap.techchallengeapipedidoproduto.cliente.application.usecase.impl.ConsultarClienteUseCaseImpl;
 import br.com.fiap.techchallengeapipedidoproduto.cliente.infrastructure.client.ClienteClient;
-import br.com.fiap.techchallengeapipedidoproduto.cliente.usecase.ConsultarClienteUseCase;
-import br.com.fiap.techchallengeapipedidoproduto.cliente.usecase.impl.ConsultarClienteUseCaseImpl;
 import br.com.fiap.techchallengeapipedidoproduto.core.config.properties.MercadoPagoProperties;
-//import br.com.fiap.techchallengeapipedidoproduto.pagamento.application.gateway.PagamentoGateway;
-//import br.com.fiap.techchallengeapipedidoproduto.pagamento.application.gateway.impl.PagamentoGatewayImpl;
-//import br.com.fiap.techchallengeapipedidoproduto.pagamento.application.mapper.DatabasePagamentoMapper;
-//import br.com.fiap.techchallengeapipedidoproduto.pagamento.application.usecase.SalvarPagamentoUseCase;
-//import br.com.fiap.techchallengeapipedidoproduto.pagamento.application.usecase.impl.SalvarPagamentoUseCaseImpl;
-//import br.com.fiap.techchallengeapipedidoproduto.pagamento.common.interfaces.PagamentoDatabase;
+import br.com.fiap.techchallengeapipedidoproduto.pagamento.application.usecase.ConsultarPagamentoUseCase;
+import br.com.fiap.techchallengeapipedidoproduto.pagamento.application.usecase.SalvarPagamentoUseCase;
+import br.com.fiap.techchallengeapipedidoproduto.pagamento.application.usecase.impl.ConsultarPagamentoUseCaseImpl;
+import br.com.fiap.techchallengeapipedidoproduto.pagamento.application.usecase.impl.SalvarPagamentoUseCaseImpl;
+import br.com.fiap.techchallengeapipedidoproduto.pagamento.infrastructure.client.PagamentoClient;
 import br.com.fiap.techchallengeapipedidoproduto.pedido.application.controller.PedidoController;
 import br.com.fiap.techchallengeapipedidoproduto.pedido.application.gateway.PedidoGateway;
 import br.com.fiap.techchallengeapipedidoproduto.pedido.application.gateway.impl.PedidoGatewayImpl;
@@ -61,24 +54,19 @@ public class PedidoControllerImpl implements PedidoController {
 
     public PedidoControllerImpl(PedidoDatabase pedidoDatabase,
                                 ProdutoDatabase produtoDatabase,
-//                                ClienteDatabase clienteDatabase,
-//                                PagamentoDatabase pagamentoDatabase,
                                 ProdutoMapper produtoMapper,
                                 RequestPedidoMapper requestPedidoMapper,
-//                                DatabaseClienteMapper databaseClienteMapper,
                                 DatabasePedidoMapper databasePedidoMapper,
-//                                DatabasePagamentoMapper databasePagamentoMapper,
                                 MercadoPagoOrderRequestMapper mercadoPagoOrderRequestMapper,
                                 PedidoPresenter pedidoPresenter,
                                 MercadoPagoCodigoQRClient mercadoPagoCodigoQRClient,
                                 MercadoPagoMerchantOrdersClient mercadoPagoMerchantOrdersClient,
                                 MercadoPagoProperties mercadoPagoProperties,
-                                ClienteClient clienteClient
+                                ClienteClient clienteClient,
+                                PagamentoClient pagamentoClient
     ) {
-//        final PagamentoGateway pagamentoGateway = new PagamentoGatewayImpl(pagamentoDatabase, databasePagamentoMapper);
-//        final SalvarPagamentoUseCase salvarPagamentoUseCase = new SalvarPagamentoUseCaseImpl(pagamentoGateway);
-//
-//        final ClienteGateway clienteGateway = new ClienteGatewayImpl(clienteDatabase, databaseClienteMapper);
+        final ConsultarPagamentoUseCase consultarPagamentoUseCase = new ConsultarPagamentoUseCaseImpl(pagamentoClient);
+        final SalvarPagamentoUseCase salvarPagamentoUseCase = new SalvarPagamentoUseCaseImpl(pagamentoClient);
         final ConsultarClienteUseCase consultarClienteUseCase = new ConsultarClienteUseCaseImpl(clienteClient);
 
         final ProdutoGateway produtoGateway = new ProdutoGatewayImpl(produtoDatabase, produtoMapper);
@@ -87,9 +75,9 @@ public class PedidoControllerImpl implements PedidoController {
         final CriarPedidoMercadoPagoUseCase criarPedidoMercadoPagoUseCase = new CriarPedidoMercadoPagoUseCaseImpl(mercadoPagoOrderRequestMapper, mercadoPagoCodigoQRClient, mercadoPagoProperties);
 
         final PedidoGateway pedidoGateway = new PedidoGatewayImpl(pedidoDatabase, databasePedidoMapper);
-        this.salvarPedidoUseCase = new SalvarPedidoUseCaseImpl(pedidoGateway, buscarProdutoUseCase, consultarClienteUseCase, criarPedidoMercadoPagoUseCase);
-        this.consultarPedidoUseCase = new ConsultarPedidoUseCaseImpl(pedidoGateway, consultarClienteUseCase);
-        this.processarPedidoUseCase = new ProcessarPedidoMercadoPagoUseCaseImpl(consultarPedidoUseCase, salvarPedidoUseCase, mercadoPagoMerchantOrdersClient, mercadoPagoProperties);
+        this.salvarPedidoUseCase = new SalvarPedidoUseCaseImpl(pedidoGateway, buscarProdutoUseCase, consultarClienteUseCase, salvarPagamentoUseCase, criarPedidoMercadoPagoUseCase);
+        this.consultarPedidoUseCase = new ConsultarPedidoUseCaseImpl(pedidoGateway, consultarClienteUseCase, consultarPagamentoUseCase);
+        this.processarPedidoUseCase = new ProcessarPedidoMercadoPagoUseCaseImpl(salvarPagamentoUseCase, consultarPedidoUseCase, salvarPedidoUseCase, mercadoPagoMerchantOrdersClient, mercadoPagoProperties);
         this.requestPedidoMapper = requestPedidoMapper;
         this.pedidoPresenter = pedidoPresenter;
     }
