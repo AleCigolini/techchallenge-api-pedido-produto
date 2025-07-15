@@ -30,7 +30,6 @@ public class ProcessarPedidoMercadoPagoUseCaseImplTest {
     private MercadoPagoMerchantOrdersClient mercadoPagoMerchantOrdersClient;
     private MercadoPagoProperties mercadoPagoProperties;
     private ProcessarPedidoMercadoPagoUseCaseImpl processarPedidoMercadoPagoUseCase;
-    private SalvarPagamentoUseCase salvarPagamentoUseCase;
 
     @BeforeEach
     public void setUp() {
@@ -39,7 +38,7 @@ public class ProcessarPedidoMercadoPagoUseCaseImplTest {
         mercadoPagoMerchantOrdersClient = Mockito.mock(MercadoPagoMerchantOrdersClient.class);
         mercadoPagoProperties = Mockito.mock(MercadoPagoProperties.class);
         mercadoPagoProperties = Mockito.mock(MercadoPagoProperties.class);
-        salvarPagamentoUseCase = Mockito.mock(SalvarPagamentoUseCase.class);
+        SalvarPagamentoUseCase salvarPagamentoUseCase = Mockito.mock(SalvarPagamentoUseCase.class);
 
         processarPedidoMercadoPagoUseCase = new ProcessarPedidoMercadoPagoUseCaseImpl(
                 salvarPagamentoUseCase,

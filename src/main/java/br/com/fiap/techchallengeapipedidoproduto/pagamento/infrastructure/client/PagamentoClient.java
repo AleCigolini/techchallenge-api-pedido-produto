@@ -2,8 +2,6 @@ package br.com.fiap.techchallengeapipedidoproduto.pagamento.infrastructure.clien
 
 import br.com.fiap.techchallengeapipedidoproduto.pagamento.common.domain.dto.request.PagamentoPendenteRequestDTO;
 import br.com.fiap.techchallengeapipedidoproduto.pagamento.domain.Pagamento;
-import br.com.fiap.techchallengeapipedidoproduto.pedido.domain.Pedido;
-import org.apache.catalina.authenticator.SavedRequest;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;

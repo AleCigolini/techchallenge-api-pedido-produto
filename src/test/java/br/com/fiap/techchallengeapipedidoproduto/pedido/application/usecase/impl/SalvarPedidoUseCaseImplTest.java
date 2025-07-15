@@ -29,17 +29,15 @@ public class SalvarPedidoUseCaseImplTest {
     private PedidoGateway pedidoGateway;
     private BuscarProdutoUseCase buscarProdutoUseCase;
     private CriarPedidoMercadoPagoUseCase criarPedidoMercadoPagoUseCase;
-    private ConsultarClienteUseCase consultarClienteUseCase;
     private SalvarPedidoUseCaseImpl salvarPedidoUseCase;
-    private SalvarPagamentoUseCase salvarPagamentoUseCase;
 
     @BeforeEach
     public void setUp() {
         pedidoGateway = Mockito.mock(PedidoGateway.class);
         buscarProdutoUseCase = Mockito.mock(BuscarProdutoUseCase.class);
         criarPedidoMercadoPagoUseCase = Mockito.mock(CriarPedidoMercadoPagoUseCase.class);
-        consultarClienteUseCase = Mockito.mock(ConsultarClienteUseCase.class);
-        salvarPagamentoUseCase = Mockito.mock(SalvarPagamentoUseCase.class);
+        ConsultarClienteUseCase consultarClienteUseCase = Mockito.mock(ConsultarClienteUseCase.class);
+        SalvarPagamentoUseCase salvarPagamentoUseCase = Mockito.mock(SalvarPagamentoUseCase.class);
 
         salvarPedidoUseCase = new SalvarPedidoUseCaseImpl(
                 pedidoGateway,

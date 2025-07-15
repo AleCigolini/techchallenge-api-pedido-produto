@@ -1,9 +1,8 @@
 package br.com.fiap.techchallengeapipedidoproduto.pedido.application.usecase.impl;
 
-import br.com.fiap.techchallengeapipedidoproduto.cliente.domain.Cliente;
 import br.com.fiap.techchallengeapipedidoproduto.cliente.application.usecase.ConsultarClienteUseCase;
+import br.com.fiap.techchallengeapipedidoproduto.cliente.domain.Cliente;
 import br.com.fiap.techchallengeapipedidoproduto.pagamento.application.usecase.ConsultarPagamentoUseCase;
-import br.com.fiap.techchallengeapipedidoproduto.pagamento.domain.Pagamento;
 import br.com.fiap.techchallengeapipedidoproduto.pedido.application.gateway.PedidoGateway;
 import br.com.fiap.techchallengeapipedidoproduto.pedido.domain.Pedido;
 import br.com.fiap.techchallengeapipedidoproduto.pedido.domain.StatusPedidoEnum;
