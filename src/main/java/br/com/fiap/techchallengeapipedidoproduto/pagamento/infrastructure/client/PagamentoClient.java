@@ -4,6 +4,7 @@ import br.com.fiap.techchallengeapipedidoproduto.pagamento.common.domain.dto.req
 import br.com.fiap.techchallengeapipedidoproduto.pagamento.domain.Pagamento;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -18,5 +19,6 @@ public interface PagamentoClient {
     @PostMapping("/salvar-pagamento-pendente")
     void criarPagamentoPendenteParaOPedido(@RequestBody PagamentoPendenteRequestDTO pagamentoPendenteRequestDTO);
 
+    @GetMapping("/buscar-pagamentos-por-pedido")
     ResponseEntity<List<Pagamento>> buscarPagamentosPorPedido(@RequestBody String idPedido);
 }
