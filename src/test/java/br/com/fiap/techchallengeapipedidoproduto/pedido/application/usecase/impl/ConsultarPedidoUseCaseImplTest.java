@@ -1,7 +1,8 @@
 package br.com.fiap.techchallengeapipedidoproduto.pedido.application.usecase.impl;
 
+import br.com.fiap.techchallengeapipedidoproduto.cliente.application.usecase.ConsultarClienteUseCase;
 import br.com.fiap.techchallengeapipedidoproduto.cliente.domain.Cliente;
-import br.com.fiap.techchallengeapipedidoproduto.cliente.usecase.ConsultarClienteUseCase;
+import br.com.fiap.techchallengeapipedidoproduto.pagamento.application.usecase.ConsultarPagamentoUseCase;
 import br.com.fiap.techchallengeapipedidoproduto.pedido.application.gateway.PedidoGateway;
 import br.com.fiap.techchallengeapipedidoproduto.pedido.domain.Pedido;
 import br.com.fiap.techchallengeapipedidoproduto.pedido.domain.StatusPedidoEnum;
@@ -28,9 +29,11 @@ public class ConsultarPedidoUseCaseImplTest {
     public void setUp() {
         pedidoGateway = Mockito.mock(PedidoGateway.class);
         ConsultarClienteUseCase consultarClienteUseCase = Mockito.mock(ConsultarClienteUseCase.class);
-        useCase = new ConsultarPedidoUseCaseImpl(pedidoGateway, consultarClienteUseCase);
+        ConsultarPagamentoUseCase consultarPagamentoUseCase = Mockito.mock(ConsultarPagamentoUseCase.class);
+        useCase = new ConsultarPedidoUseCaseImpl(pedidoGateway, consultarClienteUseCase, consultarPagamentoUseCase);
 
         Mockito.when(consultarClienteUseCase.buscarClientePorId(anyString())).thenReturn(Mockito.mock(Cliente.class));
+        Mockito.when(consultarPagamentoUseCase.buscarPagamentosPorPedido(anyString())).thenReturn(List.of());
     }
 
     @AfterEach
