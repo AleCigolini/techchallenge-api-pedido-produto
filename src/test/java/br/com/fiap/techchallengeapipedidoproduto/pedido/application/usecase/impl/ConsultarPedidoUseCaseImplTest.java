@@ -83,6 +83,7 @@ public class ConsultarPedidoUseCaseImplTest {
         String id = "abc123";
         Pedido pedidoMock = new Pedido();
         pedidoMock.setId(id);
+        pedidoMock.setCliente(new Cliente());
         when(pedidoGateway.buscarPedidoPorId(id)).thenReturn(pedidoMock);
 
         // when
