@@ -37,6 +37,18 @@ spec:
                 secretKeyRef:
                   name: app-secret
                   key: POSTGRES_PASSWORD
+            - name: SPRING_FLYWAY_URL
+              value: jdbc:postgresql://techchallenge-pedido-produto-dev.postgres.database.azure.com:5432/postgres
+            - name: SPRING_FLYWAY_USER
+              valueFrom:
+                secretKeyRef:
+                  name: app-secret
+                  key: POSTGRES_USER
+            - name: SPRING_FLYWAY_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: app-secret
+                  key: POSTGRES_PASSWORD
             - name: CLIENT_MERCADO_PAGO_USER_ID
               valueFrom:
                 secretKeyRef:

@@ -9,6 +9,10 @@ spring:
     username: "postgres"
     password: "postgres"
     driver-class-name: org.postgresql.Driver
+  flyway:
+    url: jdbc:postgresql://localhost:5432/techchallenge
+    user: postgres
+    password: postgres
 client:
   pagamento:
     base-url: "http://localhost:8080/pagamentos"
