@@ -47,9 +47,6 @@ jobs:
             -Dsonar.coverage.jacoco.xmlReportPaths=target/app/jacoco/jacoco.xml \
             -Dsonar.qualitygate.wait=true
 
-      - name: Run Flyway Migration
-        run: mvn flyway:migrate
-
       - name: Log in to Docker Hub
         uses: docker/login-action@v3
         with:
