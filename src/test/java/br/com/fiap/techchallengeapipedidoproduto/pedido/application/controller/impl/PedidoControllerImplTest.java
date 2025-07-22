@@ -1,16 +1,15 @@
 package br.com.fiap.techchallengeapipedidoproduto.pedido.application.controller.impl;
 
 import br.com.fiap.techchallengeapipedidoproduto.cliente.infrastructure.client.ClienteClient;
+import br.com.fiap.techchallengeapipedidoproduto.pagamento.application.usecase.ProcessarPedidoUseCase;
 import br.com.fiap.techchallengeapipedidoproduto.pagamento.infrastructure.client.PagamentoClient;
 import br.com.fiap.techchallengeapipedidoproduto.pedido.application.mapper.DatabasePedidoMapper;
 import br.com.fiap.techchallengeapipedidoproduto.pedido.application.mapper.RequestPedidoMapper;
 import br.com.fiap.techchallengeapipedidoproduto.pedido.application.presenter.PedidoPresenter;
 import br.com.fiap.techchallengeapipedidoproduto.pedido.application.usecase.ConsultarPedidoUseCase;
-import br.com.fiap.techchallengeapipedidoproduto.pagamento.application.usecase.ProcessarPedidoUseCase;
 import br.com.fiap.techchallengeapipedidoproduto.pedido.application.usecase.SalvarPedidoUseCase;
 import br.com.fiap.techchallengeapipedidoproduto.pedido.common.domain.dto.request.PedidoRequestDto;
 import br.com.fiap.techchallengeapipedidoproduto.pedido.common.domain.dto.request.PedidoStatusRequestDto;
-import br.com.fiap.techchallengeapipedidoproduto.pedido.common.domain.dto.request.WebhookNotificationRequestDto;
 import br.com.fiap.techchallengeapipedidoproduto.pedido.common.interfaces.PedidoDatabase;
 import br.com.fiap.techchallengeapipedidoproduto.pedido.domain.StatusPedidoEnum;
 import br.com.fiap.techchallengeapipedidoproduto.produto.application.mapper.ProdutoMapper;
@@ -30,7 +29,6 @@ public class PedidoControllerImplTest {
 
     private SalvarPedidoUseCase salvarPedidoUseCase;
     private ConsultarPedidoUseCase consultarPedidoUseCase;
-    private ProcessarPedidoUseCase processarPedidoUseCase;
     private PedidoControllerImpl controller;
 
     @BeforeEach
@@ -40,7 +38,7 @@ public class PedidoControllerImplTest {
         ProdutoMapper produtoMapper = Mockito.mock(ProdutoMapper.class);
         salvarPedidoUseCase = Mockito.mock(SalvarPedidoUseCase.class);
         consultarPedidoUseCase = Mockito.mock(ConsultarPedidoUseCase.class);
-        processarPedidoUseCase = Mockito.mock(ProcessarPedidoUseCase.class);
+        ProcessarPedidoUseCase processarPedidoUseCase = Mockito.mock(ProcessarPedidoUseCase.class);
         PedidoPresenter pedidoPresenter = Mockito.mock(PedidoPresenter.class);
         RequestPedidoMapper requestPedidoMapper = Mockito.mock(RequestPedidoMapper.class);
         DatabasePedidoMapper databasePedidoMapper = Mockito.mock(DatabasePedidoMapper.class);
@@ -111,17 +109,5 @@ public class PedidoControllerImplTest {
 
         // then
         Mockito.verify(salvarPedidoUseCase, Mockito.atLeastOnce()).atualizarStatusPedido(any(), any());
-    }
-
-    @Test
-    public void deveProcessarNotificacaoWebhookMercadoPago() {
-        // arrange
-        WebhookNotificationRequestDto notificacao = new WebhookNotificationRequestDto();
-
-        // when
-        controller.processarNotificacao(notificacao);
-
-        // then
-        Mockito.verify(processarPedidoUseCase, Mockito.atLeastOnce()).processarNotificacao(any());
     }
 }

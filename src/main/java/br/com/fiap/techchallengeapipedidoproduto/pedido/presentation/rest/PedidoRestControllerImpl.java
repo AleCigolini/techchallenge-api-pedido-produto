@@ -3,12 +3,10 @@ package br.com.fiap.techchallengeapipedidoproduto.pedido.presentation.rest;
 import br.com.fiap.techchallengeapipedidoproduto.pedido.application.controller.PedidoController;
 import br.com.fiap.techchallengeapipedidoproduto.pedido.common.domain.dto.request.PedidoRequestDto;
 import br.com.fiap.techchallengeapipedidoproduto.pedido.common.domain.dto.request.PedidoStatusRequestDto;
-import br.com.fiap.techchallengeapipedidoproduto.pedido.common.domain.dto.request.WebhookNotificationRequestDto;
 import br.com.fiap.techchallengeapipedidoproduto.pedido.common.domain.dto.response.PedidoResponseDto;
 import br.com.fiap.techchallengeapipedidoproduto.pedido.presentation.rest.interfaces.PedidoRestController;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -45,12 +43,5 @@ public class PedidoRestControllerImpl implements PedidoRestController {
         PedidoResponseDto pedidoResponseDTO = pedidoController.atualizarStatusPedido(pedidoStatusRequestDTO, id);
 
         return ResponseEntity.ok(pedidoResponseDTO);
-    }
-
-    @Override
-    @PostMapping("/webhook-mercado-pago")
-    @ResponseStatus(HttpStatus.ACCEPTED)
-    public void webhookMercadoPago(@RequestBody WebhookNotificationRequestDto notificacao) {
-        pedidoController.processarNotificacao(notificacao);
     }
 }

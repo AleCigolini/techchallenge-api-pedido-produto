@@ -25,9 +25,7 @@ public class CriarPedidoMercadoPagoUseCaseImpl implements CriarPedidoMercadoPago
 //                    mercadoPagoProperties.getAuthHeader(),
 //                    mercadoPagoOrderRequest);
         } catch (Exception ex) {
-            System.out.printf(
-                    "MercadoPago Error. Status: %s, Content: %s",
-                    ex.getCause(), ex.getMessage());
+            System.out.printf("Erro ao criar pedido Mercado Pago. Status: %s, Content: %s", ex.getCause(), ex.getMessage());
         }
     }
 }

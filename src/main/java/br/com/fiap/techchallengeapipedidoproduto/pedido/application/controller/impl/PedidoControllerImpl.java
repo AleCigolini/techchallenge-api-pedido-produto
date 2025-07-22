@@ -4,8 +4,10 @@ import br.com.fiap.techchallengeapipedidoproduto.cliente.application.usecase.Con
 import br.com.fiap.techchallengeapipedidoproduto.cliente.application.usecase.impl.ConsultarClienteUseCaseImpl;
 import br.com.fiap.techchallengeapipedidoproduto.cliente.infrastructure.client.ClienteClient;
 import br.com.fiap.techchallengeapipedidoproduto.pagamento.application.usecase.ConsultarPagamentoUseCase;
+import br.com.fiap.techchallengeapipedidoproduto.pagamento.application.usecase.CriarPedidoMercadoPagoUseCase;
 import br.com.fiap.techchallengeapipedidoproduto.pagamento.application.usecase.SalvarPagamentoUseCase;
 import br.com.fiap.techchallengeapipedidoproduto.pagamento.application.usecase.impl.ConsultarPagamentoUseCaseImpl;
+import br.com.fiap.techchallengeapipedidoproduto.pagamento.application.usecase.impl.CriarPedidoMercadoPagoUseCaseImpl;
 import br.com.fiap.techchallengeapipedidoproduto.pagamento.application.usecase.impl.SalvarPagamentoUseCaseImpl;
 import br.com.fiap.techchallengeapipedidoproduto.pagamento.infrastructure.client.PagamentoClient;
 import br.com.fiap.techchallengeapipedidoproduto.pedido.application.controller.PedidoController;
@@ -15,16 +17,11 @@ import br.com.fiap.techchallengeapipedidoproduto.pedido.application.mapper.Datab
 import br.com.fiap.techchallengeapipedidoproduto.pedido.application.mapper.RequestPedidoMapper;
 import br.com.fiap.techchallengeapipedidoproduto.pedido.application.presenter.PedidoPresenter;
 import br.com.fiap.techchallengeapipedidoproduto.pedido.application.usecase.ConsultarPedidoUseCase;
-import br.com.fiap.techchallengeapipedidoproduto.pagamento.application.usecase.CriarPedidoMercadoPagoUseCase;
-import br.com.fiap.techchallengeapipedidoproduto.pagamento.application.usecase.ProcessarPedidoUseCase;
 import br.com.fiap.techchallengeapipedidoproduto.pedido.application.usecase.SalvarPedidoUseCase;
 import br.com.fiap.techchallengeapipedidoproduto.pedido.application.usecase.impl.ConsultarPedidoUseCaseImpl;
-import br.com.fiap.techchallengeapipedidoproduto.pagamento.application.usecase.impl.CriarPedidoMercadoPagoUseCaseImpl;
-import br.com.fiap.techchallengeapipedidoproduto.pagamento.application.usecase.impl.ProcessarPedidoMercadoPagoUseCaseImpl;
 import br.com.fiap.techchallengeapipedidoproduto.pedido.application.usecase.impl.SalvarPedidoUseCaseImpl;
 import br.com.fiap.techchallengeapipedidoproduto.pedido.common.domain.dto.request.PedidoRequestDto;
 import br.com.fiap.techchallengeapipedidoproduto.pedido.common.domain.dto.request.PedidoStatusRequestDto;
-import br.com.fiap.techchallengeapipedidoproduto.pedido.common.domain.dto.request.WebhookNotificationRequestDto;
 import br.com.fiap.techchallengeapipedidoproduto.pedido.common.domain.dto.response.PedidoResponseDto;
 import br.com.fiap.techchallengeapipedidoproduto.pedido.common.interfaces.PedidoDatabase;
 import br.com.fiap.techchallengeapipedidoproduto.pedido.domain.Pedido;
@@ -44,7 +41,6 @@ public class PedidoControllerImpl implements PedidoController {
 
     private final SalvarPedidoUseCase salvarPedidoUseCase;
     private final ConsultarPedidoUseCase consultarPedidoUseCase;
-    private final ProcessarPedidoUseCase processarPedidoUseCase;
     private final RequestPedidoMapper requestPedidoMapper;
     private final PedidoPresenter pedidoPresenter;
 
@@ -69,7 +65,6 @@ public class PedidoControllerImpl implements PedidoController {
         final PedidoGateway pedidoGateway = new PedidoGatewayImpl(pedidoDatabase, databasePedidoMapper);
         this.salvarPedidoUseCase = new SalvarPedidoUseCaseImpl(pedidoGateway, buscarProdutoUseCase, consultarClienteUseCase, salvarPagamentoUseCase, criarPedidoMercadoPagoUseCase);
         this.consultarPedidoUseCase = new ConsultarPedidoUseCaseImpl(pedidoGateway, consultarClienteUseCase, consultarPagamentoUseCase);
-        this.processarPedidoUseCase = new ProcessarPedidoMercadoPagoUseCaseImpl(salvarPagamentoUseCase, consultarPedidoUseCase, salvarPedidoUseCase);
         this.requestPedidoMapper = requestPedidoMapper;
         this.pedidoPresenter = pedidoPresenter;
     }
@@ -95,10 +90,5 @@ public class PedidoControllerImpl implements PedidoController {
         Pedido pedido = salvarPedidoUseCase.atualizarStatusPedido(pedidoPresenter.statusPedidoParaStatusPedidoEnum(pedidoStatusRequestDTO.getStatus()), id);
 
         return pedidoPresenter.pedidoParaPedidoResponseDTO(pedido);
-    }
-
-    @Override
-    public void processarNotificacao(WebhookNotificationRequestDto notificacao) {
-        processarPedidoUseCase.processarNotificacao(notificacao);
     }
 }
