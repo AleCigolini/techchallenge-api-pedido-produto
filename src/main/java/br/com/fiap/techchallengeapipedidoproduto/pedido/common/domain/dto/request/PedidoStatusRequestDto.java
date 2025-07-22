@@ -8,4 +8,6 @@ public class PedidoStatusRequestDto {
 
     @NotBlank
     private String status;
+
+    private String codigoPagamento;
 }

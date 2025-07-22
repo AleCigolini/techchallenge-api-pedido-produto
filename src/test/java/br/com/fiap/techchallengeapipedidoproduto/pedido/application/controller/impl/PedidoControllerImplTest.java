@@ -1,7 +1,6 @@
 package br.com.fiap.techchallengeapipedidoproduto.pedido.application.controller.impl;
 
 import br.com.fiap.techchallengeapipedidoproduto.cliente.infrastructure.client.ClienteClient;
-import br.com.fiap.techchallengeapipedidoproduto.pagamento.application.usecase.ProcessarPedidoUseCase;
 import br.com.fiap.techchallengeapipedidoproduto.pagamento.infrastructure.client.PagamentoClient;
 import br.com.fiap.techchallengeapipedidoproduto.pedido.application.mapper.DatabasePedidoMapper;
 import br.com.fiap.techchallengeapipedidoproduto.pedido.application.mapper.RequestPedidoMapper;
@@ -38,7 +37,6 @@ public class PedidoControllerImplTest {
         ProdutoMapper produtoMapper = Mockito.mock(ProdutoMapper.class);
         salvarPedidoUseCase = Mockito.mock(SalvarPedidoUseCase.class);
         consultarPedidoUseCase = Mockito.mock(ConsultarPedidoUseCase.class);
-        ProcessarPedidoUseCase processarPedidoUseCase = Mockito.mock(ProcessarPedidoUseCase.class);
         PedidoPresenter pedidoPresenter = Mockito.mock(PedidoPresenter.class);
         RequestPedidoMapper requestPedidoMapper = Mockito.mock(RequestPedidoMapper.class);
         DatabasePedidoMapper databasePedidoMapper = Mockito.mock(DatabasePedidoMapper.class);
@@ -58,7 +56,6 @@ public class PedidoControllerImplTest {
 
         ReflectionTestUtils.setField(controller, "consultarPedidoUseCase", consultarPedidoUseCase);
         ReflectionTestUtils.setField(controller, "salvarPedidoUseCase", salvarPedidoUseCase);
-        ReflectionTestUtils.setField(controller, "processarPedidoUseCase", processarPedidoUseCase);
     }
 
     @AfterEach
@@ -108,6 +105,6 @@ public class PedidoControllerImplTest {
         controller.atualizarStatusPedido(pedidoStatusRequestDto, "idTest");
 
         // then
-        Mockito.verify(salvarPedidoUseCase, Mockito.atLeastOnce()).atualizarStatusPedido(any(), any());
+        Mockito.verify(salvarPedidoUseCase, Mockito.atLeastOnce()).atualizarStatusPedido(any(), any(), any());
     }
 }

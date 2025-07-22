@@ -5,10 +5,8 @@ import br.com.fiap.techchallengeapipedidoproduto.cliente.application.usecase.imp
 import br.com.fiap.techchallengeapipedidoproduto.cliente.infrastructure.client.ClienteClient;
 import br.com.fiap.techchallengeapipedidoproduto.pagamento.application.usecase.ConsultarPagamentoUseCase;
 import br.com.fiap.techchallengeapipedidoproduto.pagamento.application.usecase.CriarPedidoMercadoPagoUseCase;
-import br.com.fiap.techchallengeapipedidoproduto.pagamento.application.usecase.SalvarPagamentoUseCase;
 import br.com.fiap.techchallengeapipedidoproduto.pagamento.application.usecase.impl.ConsultarPagamentoUseCaseImpl;
 import br.com.fiap.techchallengeapipedidoproduto.pagamento.application.usecase.impl.CriarPedidoMercadoPagoUseCaseImpl;
-import br.com.fiap.techchallengeapipedidoproduto.pagamento.application.usecase.impl.SalvarPagamentoUseCaseImpl;
 import br.com.fiap.techchallengeapipedidoproduto.pagamento.infrastructure.client.PagamentoClient;
 import br.com.fiap.techchallengeapipedidoproduto.pedido.application.controller.PedidoController;
 import br.com.fiap.techchallengeapipedidoproduto.pedido.application.gateway.PedidoGateway;
@@ -54,7 +52,6 @@ public class PedidoControllerImpl implements PedidoController {
                                 PagamentoClient pagamentoClient
     ) {
         final ConsultarPagamentoUseCase consultarPagamentoUseCase = new ConsultarPagamentoUseCaseImpl(pagamentoClient);
-        final SalvarPagamentoUseCase salvarPagamentoUseCase = new SalvarPagamentoUseCaseImpl(pagamentoClient);
         final ConsultarClienteUseCase consultarClienteUseCase = new ConsultarClienteUseCaseImpl(clienteClient);
 
         final ProdutoGateway produtoGateway = new ProdutoGatewayImpl(produtoDatabase, produtoMapper);
@@ -63,7 +60,7 @@ public class PedidoControllerImpl implements PedidoController {
         final CriarPedidoMercadoPagoUseCase criarPedidoMercadoPagoUseCase = new CriarPedidoMercadoPagoUseCaseImpl(pagamentoClient);
 
         final PedidoGateway pedidoGateway = new PedidoGatewayImpl(pedidoDatabase, databasePedidoMapper);
-        this.salvarPedidoUseCase = new SalvarPedidoUseCaseImpl(pedidoGateway, buscarProdutoUseCase, consultarClienteUseCase, salvarPagamentoUseCase, criarPedidoMercadoPagoUseCase);
+        this.salvarPedidoUseCase = new SalvarPedidoUseCaseImpl(pedidoGateway, buscarProdutoUseCase, consultarClienteUseCase, criarPedidoMercadoPagoUseCase);
         this.consultarPedidoUseCase = new ConsultarPedidoUseCaseImpl(pedidoGateway, consultarClienteUseCase, consultarPagamentoUseCase);
         this.requestPedidoMapper = requestPedidoMapper;
         this.pedidoPresenter = pedidoPresenter;
@@ -87,7 +84,9 @@ public class PedidoControllerImpl implements PedidoController {
 
     @Override
     public PedidoResponseDto atualizarStatusPedido(PedidoStatusRequestDto pedidoStatusRequestDTO, String id) {
-        Pedido pedido = salvarPedidoUseCase.atualizarStatusPedido(pedidoPresenter.statusPedidoParaStatusPedidoEnum(pedidoStatusRequestDTO.getStatus()), id);
+        StatusPedidoEnum statusPedidoEnum = pedidoPresenter.statusPedidoParaStatusPedidoEnum(pedidoStatusRequestDTO.getStatus());
+
+        Pedido pedido = salvarPedidoUseCase.atualizarStatusPedido(statusPedidoEnum, pedidoStatusRequestDTO.getCodigoPagamento(), id);
 
         return pedidoPresenter.pedidoParaPedidoResponseDTO(pedido);
     }

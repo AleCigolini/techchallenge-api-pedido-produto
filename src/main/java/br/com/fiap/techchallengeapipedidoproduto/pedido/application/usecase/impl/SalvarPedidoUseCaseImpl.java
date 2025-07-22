@@ -1,8 +1,6 @@
 package br.com.fiap.techchallengeapipedidoproduto.pedido.application.usecase.impl;
 
 import br.com.fiap.techchallengeapipedidoproduto.cliente.application.usecase.ConsultarClienteUseCase;
-import br.com.fiap.techchallengeapipedidoproduto.pagamento.application.usecase.SalvarPagamentoUseCase;
-import br.com.fiap.techchallengeapipedidoproduto.pagamento.common.domain.dto.request.PagamentoPendenteRequestDTO;
 import br.com.fiap.techchallengeapipedidoproduto.pedido.application.gateway.PedidoGateway;
 import br.com.fiap.techchallengeapipedidoproduto.pagamento.application.usecase.CriarPedidoMercadoPagoUseCase;
 import br.com.fiap.techchallengeapipedidoproduto.pedido.application.usecase.SalvarPedidoUseCase;
@@ -25,19 +23,16 @@ public class SalvarPedidoUseCaseImpl implements SalvarPedidoUseCase {
     private final PedidoGateway pedidoGateway;
     private final ConsultarClienteUseCase consultarClienteUseCase;
     private final BuscarProdutoUseCase buscarProdutoUseCase;
-    private final SalvarPagamentoUseCase salvarPagamentoUseCase;
     private final CriarPedidoMercadoPagoUseCase criarPedidoMercadoPagoUseCase;
 
     public SalvarPedidoUseCaseImpl(PedidoGateway pedidoGateway,
                                    BuscarProdutoUseCase buscarProdutoUseCase,
                                    ConsultarClienteUseCase consultarClienteUseCase,
-                                   SalvarPagamentoUseCase salvarPagamentoUseCase,
                                    CriarPedidoMercadoPagoUseCase criarPedidoMercadoPagoUseCase
     ) {
         this.pedidoGateway = pedidoGateway;
         this.buscarProdutoUseCase = buscarProdutoUseCase;
         this.consultarClienteUseCase = consultarClienteUseCase;
-        this.salvarPagamentoUseCase = salvarPagamentoUseCase;
         this.criarPedidoMercadoPagoUseCase = criarPedidoMercadoPagoUseCase;
     }
 
@@ -70,10 +65,11 @@ public class SalvarPedidoUseCaseImpl implements SalvarPedidoUseCase {
 
     @Override
     @Transactional
-    public Pedido atualizarStatusPedido(StatusPedidoEnum statusPedidoEnum, String id) {
+    public Pedido atualizarStatusPedido(StatusPedidoEnum statusPedidoEnum, String codigoPagamento, String id) {
         Pedido pedido = new Pedido();
         pedido.setId(id);
         pedido.setStatus(statusPedidoEnum.toString());
+        pedido.setCodigoPagamento(codigoPagamento);
         return atualizarPedido(pedido);
     }
 

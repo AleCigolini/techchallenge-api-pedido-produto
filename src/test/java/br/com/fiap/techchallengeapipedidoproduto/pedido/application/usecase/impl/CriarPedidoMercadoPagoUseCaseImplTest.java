@@ -9,7 +9,6 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
 import static org.mockito.Mockito.any;
-import static org.mockito.Mockito.doNothing;
 
 public class CriarPedidoMercadoPagoUseCaseImplTest {
 
@@ -20,8 +19,6 @@ public class CriarPedidoMercadoPagoUseCaseImplTest {
     public void setUp() {
         pagamentoClient = Mockito.mock(PagamentoClient.class);
         criarPedidoMercadoPagoUseCase = new CriarPedidoMercadoPagoUseCaseImpl(pagamentoClient);
-
-        doNothing().when(pagamentoClient).criarPedidoMercadoPago(any());
     }
 
     @AfterEach
@@ -32,12 +29,14 @@ public class CriarPedidoMercadoPagoUseCaseImplTest {
     @Test
     public void deveCriarPedidoMercadoPagoComSucesso() {
         // given
+        Mockito.when(pagamentoClient.criarPedidoMercadoPago(any())).thenReturn(null);
         Pedido pedido = new Pedido();
 
         // when
         criarPedidoMercadoPagoUseCase.criarPedidoMercadoPago(pedido);
 
         // then
+        Mockito.verify(pagamentoClient, Mockito.times(1)).criarPedidoMercadoPago(pedido);
     }
 }
 

@@ -1,9 +1,8 @@
 package br.com.fiap.techchallengeapipedidoproduto.pedido.application.usecase.impl;
 
 import br.com.fiap.techchallengeapipedidoproduto.cliente.application.usecase.ConsultarClienteUseCase;
-import br.com.fiap.techchallengeapipedidoproduto.pagamento.application.usecase.SalvarPagamentoUseCase;
-import br.com.fiap.techchallengeapipedidoproduto.pedido.application.gateway.PedidoGateway;
 import br.com.fiap.techchallengeapipedidoproduto.pagamento.application.usecase.CriarPedidoMercadoPagoUseCase;
+import br.com.fiap.techchallengeapipedidoproduto.pedido.application.gateway.PedidoGateway;
 import br.com.fiap.techchallengeapipedidoproduto.pedido.common.domain.exception.PedidoNaoEncontradoException;
 import br.com.fiap.techchallengeapipedidoproduto.pedido.domain.Pedido;
 import br.com.fiap.techchallengeapipedidoproduto.pedido.domain.ProdutoPedido;
@@ -37,13 +36,11 @@ public class SalvarPedidoUseCaseImplTest {
         buscarProdutoUseCase = Mockito.mock(BuscarProdutoUseCase.class);
         criarPedidoMercadoPagoUseCase = Mockito.mock(CriarPedidoMercadoPagoUseCase.class);
         ConsultarClienteUseCase consultarClienteUseCase = Mockito.mock(ConsultarClienteUseCase.class);
-        SalvarPagamentoUseCase salvarPagamentoUseCase = Mockito.mock(SalvarPagamentoUseCase.class);
 
         salvarPedidoUseCase = new SalvarPedidoUseCaseImpl(
                 pedidoGateway,
                 buscarProdutoUseCase,
                 consultarClienteUseCase,
-                salvarPagamentoUseCase,
                 criarPedidoMercadoPagoUseCase
         );
     }
@@ -153,6 +150,7 @@ public class SalvarPedidoUseCaseImplTest {
         // given
         String idPedido = "pedido-123";
         StatusPedidoEnum novoStatus = StatusPedidoEnum.FINALIZADO;
+        String codigoPagamento = "123456";
 
         Pedido pedidoExistente = new Pedido();
         pedidoExistente.setId(idPedido);
@@ -163,7 +161,7 @@ public class SalvarPedidoUseCaseImplTest {
         when(pedidoGateway.salvarPedido(any(Pedido.class))).thenReturn(pedidoExistente);
 
         // when
-        Pedido resultado = salvarPedidoUseCase.atualizarStatusPedido(novoStatus, idPedido);
+        Pedido resultado = salvarPedidoUseCase.atualizarStatusPedido(novoStatus, codigoPagamento, idPedido);
 
         // then
         assertNotNull(resultado);
