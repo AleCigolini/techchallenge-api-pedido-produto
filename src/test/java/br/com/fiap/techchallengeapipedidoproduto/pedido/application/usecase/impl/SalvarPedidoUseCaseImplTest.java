@@ -3,7 +3,7 @@ package br.com.fiap.techchallengeapipedidoproduto.pedido.application.usecase.imp
 import br.com.fiap.techchallengeapipedidoproduto.cliente.application.usecase.ConsultarClienteUseCase;
 import br.com.fiap.techchallengeapipedidoproduto.pagamento.application.usecase.SalvarPagamentoUseCase;
 import br.com.fiap.techchallengeapipedidoproduto.pedido.application.gateway.PedidoGateway;
-import br.com.fiap.techchallengeapipedidoproduto.pedido.application.usecase.CriarPedidoMercadoPagoUseCase;
+import br.com.fiap.techchallengeapipedidoproduto.pagamento.application.usecase.CriarPedidoMercadoPagoUseCase;
 import br.com.fiap.techchallengeapipedidoproduto.pedido.common.domain.exception.PedidoNaoEncontradoException;
 import br.com.fiap.techchallengeapipedidoproduto.pedido.domain.Pedido;
 import br.com.fiap.techchallengeapipedidoproduto.pedido.domain.ProdutoPedido;
@@ -78,7 +78,7 @@ public class SalvarPedidoUseCaseImplTest {
             p.setId("pedido-123");
             return p;
         });
-        when(criarPedidoMercadoPagoUseCase.criarPedidoMercadoPago(any(Pedido.class))).thenReturn(Boolean.TRUE);
+        doNothing().when(criarPedidoMercadoPagoUseCase).criarPedidoMercadoPago(any(Pedido.class));
 
         // when
         Pedido resultado = salvarPedidoUseCase.criarPedido(pedido);

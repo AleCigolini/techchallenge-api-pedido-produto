@@ -4,7 +4,7 @@ import br.com.fiap.techchallengeapipedidoproduto.cliente.application.usecase.Con
 import br.com.fiap.techchallengeapipedidoproduto.pagamento.application.usecase.SalvarPagamentoUseCase;
 import br.com.fiap.techchallengeapipedidoproduto.pagamento.common.domain.dto.request.PagamentoPendenteRequestDTO;
 import br.com.fiap.techchallengeapipedidoproduto.pedido.application.gateway.PedidoGateway;
-import br.com.fiap.techchallengeapipedidoproduto.pedido.application.usecase.CriarPedidoMercadoPagoUseCase;
+import br.com.fiap.techchallengeapipedidoproduto.pagamento.application.usecase.CriarPedidoMercadoPagoUseCase;
 import br.com.fiap.techchallengeapipedidoproduto.pedido.application.usecase.SalvarPedidoUseCase;
 import br.com.fiap.techchallengeapipedidoproduto.pedido.common.domain.exception.PedidoNaoEncontradoException;
 import br.com.fiap.techchallengeapipedidoproduto.pedido.domain.Pedido;
@@ -44,13 +44,12 @@ public class SalvarPedidoUseCaseImpl implements SalvarPedidoUseCase {
     @Override
     @Transactional
     public Pedido criarPedido(Pedido pedido) {
-
         montarPedido(pedido);
         Pedido pedidoCriado = pedidoGateway.criarPedido(pedido);
 
-        boolean criouPedidoMercadoPago = criarPedidoMercadoPagoUseCase.criarPedidoMercadoPago(pedidoCriado);
+        criarPedidoMercadoPagoUseCase.criarPedidoMercadoPago(pedidoCriado);
 
-        salvarPagamentoUseCase.criarPagamentoPendenteParaOPedido(new PagamentoPendenteRequestDTO(pedidoCriado, criouPedidoMercadoPago));
+//        salvarPagamentoUseCase.criarPagamentoPendenteParaOPedido(new PagamentoPendenteRequestDTO(pedidoCriado, criouPedidoMercadoPago));
 
         return pedidoCriado;
     }

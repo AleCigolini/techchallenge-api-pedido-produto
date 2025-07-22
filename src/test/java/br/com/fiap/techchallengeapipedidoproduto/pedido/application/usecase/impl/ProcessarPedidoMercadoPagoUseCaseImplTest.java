@@ -2,13 +2,13 @@ package br.com.fiap.techchallengeapipedidoproduto.pedido.application.usecase.imp
 
 import br.com.fiap.techchallengeapipedidoproduto.core.config.properties.MercadoPagoProperties;
 import br.com.fiap.techchallengeapipedidoproduto.pagamento.application.usecase.SalvarPagamentoUseCase;
+import br.com.fiap.techchallengeapipedidoproduto.pagamento.application.usecase.impl.ProcessarPedidoMercadoPagoUseCaseImpl;
 import br.com.fiap.techchallengeapipedidoproduto.pedido.application.usecase.ConsultarPedidoUseCase;
 import br.com.fiap.techchallengeapipedidoproduto.pedido.application.usecase.SalvarPedidoUseCase;
 import br.com.fiap.techchallengeapipedidoproduto.pedido.common.domain.dto.request.WebhookDataRequestDto;
 import br.com.fiap.techchallengeapipedidoproduto.pedido.common.domain.dto.request.WebhookNotificationRequestDto;
 import br.com.fiap.techchallengeapipedidoproduto.pedido.domain.Pedido;
 import br.com.fiap.techchallengeapipedidoproduto.pedido.domain.StatusPedidoEnum;
-import br.com.fiap.techchallengeapipedidoproduto.pedido.infrastructure.client.mercadopago.MercadoPagoMerchantOrdersClient;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

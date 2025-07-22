@@ -1,22 +1,18 @@
 package br.com.fiap.techchallengeapipedidoproduto.pedido.application.controller.impl;
 
 import br.com.fiap.techchallengeapipedidoproduto.cliente.infrastructure.client.ClienteClient;
-import br.com.fiap.techchallengeapipedidoproduto.core.config.properties.MercadoPagoProperties;
 import br.com.fiap.techchallengeapipedidoproduto.pagamento.infrastructure.client.PagamentoClient;
 import br.com.fiap.techchallengeapipedidoproduto.pedido.application.mapper.DatabasePedidoMapper;
 import br.com.fiap.techchallengeapipedidoproduto.pedido.application.mapper.RequestPedidoMapper;
 import br.com.fiap.techchallengeapipedidoproduto.pedido.application.presenter.PedidoPresenter;
 import br.com.fiap.techchallengeapipedidoproduto.pedido.application.usecase.ConsultarPedidoUseCase;
-import br.com.fiap.techchallengeapipedidoproduto.pedido.application.usecase.ProcessarPedidoUseCase;
+import br.com.fiap.techchallengeapipedidoproduto.pagamento.application.usecase.ProcessarPedidoUseCase;
 import br.com.fiap.techchallengeapipedidoproduto.pedido.application.usecase.SalvarPedidoUseCase;
 import br.com.fiap.techchallengeapipedidoproduto.pedido.common.domain.dto.request.PedidoRequestDto;
 import br.com.fiap.techchallengeapipedidoproduto.pedido.common.domain.dto.request.PedidoStatusRequestDto;
 import br.com.fiap.techchallengeapipedidoproduto.pedido.common.domain.dto.request.WebhookNotificationRequestDto;
 import br.com.fiap.techchallengeapipedidoproduto.pedido.common.interfaces.PedidoDatabase;
 import br.com.fiap.techchallengeapipedidoproduto.pedido.domain.StatusPedidoEnum;
-import br.com.fiap.techchallengeapipedidoproduto.pedido.infrastructure.client.mercadopago.MercadoPagoCodigoQRClient;
-import br.com.fiap.techchallengeapipedidoproduto.pedido.infrastructure.client.mercadopago.MercadoPagoMerchantOrdersClient;
-import br.com.fiap.techchallengeapipedidoproduto.pedido.infrastructure.client.mercadopago.mapper.MercadoPagoOrderRequestMapper;
 import br.com.fiap.techchallengeapipedidoproduto.produto.application.mapper.ProdutoMapper;
 import br.com.fiap.techchallengeapipedidoproduto.produto.infrastructure.database.adapter.ProdutoDatabase;
 import org.junit.jupiter.api.AfterEach;
@@ -48,10 +44,6 @@ public class PedidoControllerImplTest {
         PedidoPresenter pedidoPresenter = Mockito.mock(PedidoPresenter.class);
         RequestPedidoMapper requestPedidoMapper = Mockito.mock(RequestPedidoMapper.class);
         DatabasePedidoMapper databasePedidoMapper = Mockito.mock(DatabasePedidoMapper.class);
-        MercadoPagoOrderRequestMapper mercadoPagoOrderRequestMapper = Mockito.mock(MercadoPagoOrderRequestMapper.class);
-        MercadoPagoCodigoQRClient mercadoPagoCodigoQRClient = Mockito.mock(MercadoPagoCodigoQRClient.class);
-        MercadoPagoMerchantOrdersClient mercadoPagoMerchantOrdersClient = Mockito.mock(MercadoPagoMerchantOrdersClient.class);
-        MercadoPagoProperties mercadoPagoProperties = Mockito.mock(MercadoPagoProperties.class);
         ClienteClient clienteClient = Mockito.mock(ClienteClient.class);
         PagamentoClient pagamentoClient = Mockito.mock(PagamentoClient.class);
 
@@ -61,11 +53,7 @@ public class PedidoControllerImplTest {
                 produtoMapper,
                 requestPedidoMapper,
                 databasePedidoMapper,
-                mercadoPagoOrderRequestMapper,
                 pedidoPresenter,
-                mercadoPagoCodigoQRClient,
-                mercadoPagoMerchantOrdersClient,
-                mercadoPagoProperties,
                 clienteClient,
                 pagamentoClient
         );

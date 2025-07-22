@@ -2,6 +2,7 @@ package br.com.fiap.techchallengeapipedidoproduto.pagamento.infrastructure.clien
 
 import br.com.fiap.techchallengeapipedidoproduto.pagamento.common.domain.dto.request.PagamentoPendenteRequestDTO;
 import br.com.fiap.techchallengeapipedidoproduto.pagamento.domain.Pagamento;
+import br.com.fiap.techchallengeapipedidoproduto.pedido.domain.Pedido;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,4 +22,7 @@ public interface PagamentoClient {
 
     @GetMapping("/buscar-pagamentos-por-pedido")
     ResponseEntity<List<Pagamento>> buscarPagamentosPorPedido(@RequestBody String idPedido);
+
+    @PostMapping("/criar-pedido-mercado-pago")
+    ResponseEntity<Void> criarPedidoMercadoPago(@RequestBody Pedido pedido);
 }
