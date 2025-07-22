@@ -3,7 +3,6 @@ package br.com.fiap.techchallengeapipedidoproduto.pedido.presentation.rest;
 import br.com.fiap.techchallengeapipedidoproduto.pedido.application.controller.PedidoController;
 import br.com.fiap.techchallengeapipedidoproduto.pedido.common.domain.dto.request.PedidoRequestDto;
 import br.com.fiap.techchallengeapipedidoproduto.pedido.common.domain.dto.request.PedidoStatusRequestDto;
-import br.com.fiap.techchallengeapipedidoproduto.pedido.common.domain.dto.request.WebhookNotificationRequestDto;
 import br.com.fiap.techchallengeapipedidoproduto.pedido.common.domain.dto.response.PedidoResponseDto;
 import br.com.fiap.techchallengeapipedidoproduto.pedido.domain.StatusPedidoEnum;
 import org.junit.jupiter.api.AfterEach;
@@ -57,6 +56,7 @@ public class PedidoRestControllerImplTest {
         // then
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(pedidosEsperados, response.getBody());
+        assertNotNull(response.getBody());
         assertEquals(2, response.getBody().size());
         verify(pedidoController).buscarPedidos(null);
     }
@@ -64,7 +64,7 @@ public class PedidoRestControllerImplTest {
     @Test
     public void deveBuscarPedidosFiltrandoPorStatus() {
         // given
-        List<String> filtroStatus = Arrays.asList(StatusPedidoEnum.ABERTO.toString());
+        List<String> filtroStatus = Collections.singletonList(StatusPedidoEnum.ABERTO.toString());
 
         List<PedidoResponseDto> pedidosEsperados = Collections.singletonList(
                 criarPedidoResponseDto("1", "ABC123", StatusPedidoEnum.ABERTO.toString())
@@ -78,6 +78,7 @@ public class PedidoRestControllerImplTest {
         // then
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(pedidosEsperados, response.getBody());
+        assertNotNull(response.getBody());
         assertEquals(1, response.getBody().size());
         verify(pedidoController).buscarPedidos(filtroStatus);
     }
@@ -119,23 +120,9 @@ public class PedidoRestControllerImplTest {
         // then
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(pedidoResponse, response.getBody());
+        assertNotNull(response.getBody());
         assertEquals(StatusPedidoEnum.RECEBIDO.toString(), response.getBody().getStatus().toString());
         verify(pedidoController).atualizarStatusPedido(statusRequest, idPedido);
-    }
-
-    @Test
-    public void deveProcessarWebhookMercadoPagoRetornandoAccepted() {
-        // given
-        WebhookNotificationRequestDto notificacao = new WebhookNotificationRequestDto();
-        notificacao.setId("123456");
-        notificacao.setType("merchant_order");
-        notificacao.setAction("payment.created");
-
-        // when
-        restController.webhookMercadoPago(notificacao);
-
-        // then
-        verify(pedidoController).processarNotificacao(notificacao);
     }
 
     private PedidoResponseDto criarPedidoResponseDto(String id, String codigo, String status) {

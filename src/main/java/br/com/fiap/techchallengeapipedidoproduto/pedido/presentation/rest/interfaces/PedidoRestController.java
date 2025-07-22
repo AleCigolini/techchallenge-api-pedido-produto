@@ -2,7 +2,6 @@ package br.com.fiap.techchallengeapipedidoproduto.pedido.presentation.rest.inter
 
 import br.com.fiap.techchallengeapipedidoproduto.pedido.common.domain.dto.request.PedidoRequestDto;
 import br.com.fiap.techchallengeapipedidoproduto.pedido.common.domain.dto.request.PedidoStatusRequestDto;
-import br.com.fiap.techchallengeapipedidoproduto.pedido.common.domain.dto.request.WebhookNotificationRequestDto;
 import br.com.fiap.techchallengeapipedidoproduto.pedido.common.domain.dto.response.PedidoResponseDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -11,7 +10,6 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.net.URISyntaxException;
 import java.util.List;
@@ -60,24 +58,4 @@ public interface PedidoRestController {
      */
     @Operation(summary = "Atualizar o status de um pedido")
     ResponseEntity<PedidoResponseDto> atualizarStatusPedido(PedidoStatusRequestDto pedidoStatusRequestDTO, String id);
-
-    /**
-     * Recebe e processa notificações relacionadas ao pagamento dos pedidos
-     *
-     * @param notificacao Objeto com os dados da notificação
-     */
-    @Operation(summary = "Recebe e processa notificações relacionadas ao pagamento dos pedidos",
-            responses = {
-                    @ApiResponse(responseCode = "202"),
-                    @ApiResponse(responseCode = "400", description = "Erros de validação",
-                            content = @Content(schema = @Schema(ref = "Problema"))
-                    ),
-                    @ApiResponse(responseCode = "404", description = "Pagamento ou pedido não encontrado",
-                            content = @Content(schema = @Schema(ref = "Problema"))
-                    ),
-                    @ApiResponse(responseCode = "500", description = "Erro no procesamento da notificação de pagamento",
-                            content = @Content(schema = @Schema(ref = "Problema"))
-                    )
-            })
-    void webhookMercadoPago(@RequestBody WebhookNotificationRequestDto notificacao);
 }
