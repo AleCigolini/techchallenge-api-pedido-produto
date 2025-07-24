@@ -1,7 +1,5 @@
 package br.com.fiap.techchallengeapipedidoproduto.pedido.common.domain.dto.response;
 
-import br.com.fiap.techchallengeapipedidoproduto.cliente.domain.Cliente;
-import br.com.fiap.techchallengeapipedidoproduto.pagamento.domain.Pagamento;
 import br.com.fiap.techchallengeapipedidoproduto.pedido.domain.StatusPedidoEnum;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
@@ -9,6 +7,7 @@ import lombok.Data;
 import java.math.BigDecimal;
 import java.time.OffsetDateTime;
 import java.util.List;
+import java.util.UUID;
 
 @Data
 public class PedidoResponseDto {
@@ -20,7 +19,7 @@ public class PedidoResponseDto {
     private String codigo;
 
     @Schema(description = "Cliente do pedido")
-    private Cliente cliente;
+    private UUID idCliente;
 
     @Schema(description = "Status do pedido")
     private StatusPedidoEnum status;
@@ -37,6 +36,6 @@ public class PedidoResponseDto {
     @Schema(description = "Produtos do pedido")
     private List<ProdutoPedidoResponseDto> produtos;
 
-    @Schema(description = "Pagamentos do pedido")
-    private List<Pagamento> pagamentos;
+    @Schema(description = "Pagamento do pedido")
+    private UUID idPagamento;
 }

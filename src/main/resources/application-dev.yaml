@@ -16,11 +16,3 @@ spring:
 client:
   pagamento:
     base-url: "http://localhost:8080/pagamentos"
-  cliente:
-    base-url: "http://localhost:8080/clientes"
-  mercado-pago:
-    user_id: 123456
-    pos_id: 123456
-    external_store_id: "X"
-    external_pos_id: "X"
-    auth_header: "Bearer TEST-X"

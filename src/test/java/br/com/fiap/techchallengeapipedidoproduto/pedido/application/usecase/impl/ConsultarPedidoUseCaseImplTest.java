@@ -1,8 +1,5 @@
 package br.com.fiap.techchallengeapipedidoproduto.pedido.application.usecase.impl;
 
-import br.com.fiap.techchallengeapipedidoproduto.cliente.application.usecase.ConsultarClienteUseCase;
-import br.com.fiap.techchallengeapipedidoproduto.cliente.domain.Cliente;
-import br.com.fiap.techchallengeapipedidoproduto.pagamento.application.usecase.ConsultarPagamentoUseCase;
 import br.com.fiap.techchallengeapipedidoproduto.pedido.application.gateway.PedidoGateway;
 import br.com.fiap.techchallengeapipedidoproduto.pedido.domain.Pedido;
 import br.com.fiap.techchallengeapipedidoproduto.pedido.domain.StatusPedidoEnum;
@@ -14,6 +11,7 @@ import org.mockito.Mockito;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -28,12 +26,7 @@ public class ConsultarPedidoUseCaseImplTest {
     @BeforeEach
     public void setUp() {
         pedidoGateway = Mockito.mock(PedidoGateway.class);
-        ConsultarClienteUseCase consultarClienteUseCase = Mockito.mock(ConsultarClienteUseCase.class);
-        ConsultarPagamentoUseCase consultarPagamentoUseCase = Mockito.mock(ConsultarPagamentoUseCase.class);
-        useCase = new ConsultarPedidoUseCaseImpl(pedidoGateway, consultarClienteUseCase, consultarPagamentoUseCase);
-
-        Mockito.when(consultarClienteUseCase.buscarClientePorId(anyString())).thenReturn(Mockito.mock(Cliente.class));
-        Mockito.when(consultarPagamentoUseCase.buscarPagamentosPorPedido(anyString())).thenReturn(List.of());
+        useCase = new ConsultarPedidoUseCaseImpl(pedidoGateway);
     }
 
     @AfterEach
@@ -45,7 +38,7 @@ public class ConsultarPedidoUseCaseImplTest {
     public void deveBuscarTodosOsPedidos() {
         // given
         Pedido pedido = new Pedido();
-        pedido.setCliente(Mockito.mock(Cliente.class));
+        pedido.setIdCliente(UUID.randomUUID());
         List<Pedido> pedidosMock = Collections.singletonList(pedido);
         when(pedidoGateway.buscarPedidos(null)).thenReturn(pedidosMock);
 
@@ -63,7 +56,7 @@ public class ConsultarPedidoUseCaseImplTest {
         // given
         List<StatusPedidoEnum> statusFiltro = Arrays.asList(StatusPedidoEnum.ABERTO, StatusPedidoEnum.EM_PREPARACAO);
         Pedido pedido = new Pedido();
-        pedido.setCliente(Mockito.mock(Cliente.class));
+        pedido.setIdCliente(UUID.randomUUID());
         List<Pedido> pedidosMock = List.of(pedido);
         when(pedidoGateway.buscarPedidos(statusFiltro)).thenReturn(pedidosMock);
 
@@ -83,7 +76,7 @@ public class ConsultarPedidoUseCaseImplTest {
         String id = "abc123";
         Pedido pedidoMock = new Pedido();
         pedidoMock.setId(id);
-        pedidoMock.setCliente(new Cliente());
+        pedidoMock.setIdCliente(UUID.randomUUID());
         when(pedidoGateway.buscarPedidoPorId(id)).thenReturn(pedidoMock);
 
         // when

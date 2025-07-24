@@ -1,11 +1,6 @@
 package br.com.fiap.techchallengeapipedidoproduto.pedido.application.controller.impl;
 
-import br.com.fiap.techchallengeapipedidoproduto.cliente.application.usecase.ConsultarClienteUseCase;
-import br.com.fiap.techchallengeapipedidoproduto.cliente.application.usecase.impl.ConsultarClienteUseCaseImpl;
-import br.com.fiap.techchallengeapipedidoproduto.cliente.infrastructure.client.ClienteClient;
-import br.com.fiap.techchallengeapipedidoproduto.pagamento.application.usecase.ConsultarPagamentoUseCase;
 import br.com.fiap.techchallengeapipedidoproduto.pagamento.application.usecase.CriarPedidoMercadoPagoUseCase;
-import br.com.fiap.techchallengeapipedidoproduto.pagamento.application.usecase.impl.ConsultarPagamentoUseCaseImpl;
 import br.com.fiap.techchallengeapipedidoproduto.pagamento.application.usecase.impl.CriarPedidoMercadoPagoUseCaseImpl;
 import br.com.fiap.techchallengeapipedidoproduto.pagamento.infrastructure.client.PagamentoClient;
 import br.com.fiap.techchallengeapipedidoproduto.pedido.application.controller.PedidoController;
@@ -19,7 +14,7 @@ import br.com.fiap.techchallengeapipedidoproduto.pedido.application.usecase.Salv
 import br.com.fiap.techchallengeapipedidoproduto.pedido.application.usecase.impl.ConsultarPedidoUseCaseImpl;
 import br.com.fiap.techchallengeapipedidoproduto.pedido.application.usecase.impl.SalvarPedidoUseCaseImpl;
 import br.com.fiap.techchallengeapipedidoproduto.pedido.common.domain.dto.request.PedidoRequestDto;
-import br.com.fiap.techchallengeapipedidoproduto.pedido.common.domain.dto.request.PedidoStatusRequestDto;
+import br.com.fiap.techchallengeapipedidoproduto.pedido.common.domain.dto.request.PedidoRecebidoRequestDto;
 import br.com.fiap.techchallengeapipedidoproduto.pedido.common.domain.dto.response.PedidoResponseDto;
 import br.com.fiap.techchallengeapipedidoproduto.pedido.common.interfaces.PedidoDatabase;
 import br.com.fiap.techchallengeapipedidoproduto.pedido.domain.Pedido;
@@ -48,20 +43,16 @@ public class PedidoControllerImpl implements PedidoController {
                                 RequestPedidoMapper requestPedidoMapper,
                                 DatabasePedidoMapper databasePedidoMapper,
                                 PedidoPresenter pedidoPresenter,
-                                ClienteClient clienteClient,
                                 PagamentoClient pagamentoClient
     ) {
-        final ConsultarPagamentoUseCase consultarPagamentoUseCase = new ConsultarPagamentoUseCaseImpl(pagamentoClient);
-        final ConsultarClienteUseCase consultarClienteUseCase = new ConsultarClienteUseCaseImpl(clienteClient);
-
         final ProdutoGateway produtoGateway = new ProdutoGatewayImpl(produtoDatabase, produtoMapper);
         final BuscarProdutoUseCase buscarProdutoUseCase = new BuscarProdutoUseCaseImpl(produtoGateway);
 
         final CriarPedidoMercadoPagoUseCase criarPedidoMercadoPagoUseCase = new CriarPedidoMercadoPagoUseCaseImpl(pagamentoClient);
 
         final PedidoGateway pedidoGateway = new PedidoGatewayImpl(pedidoDatabase, databasePedidoMapper);
-        this.salvarPedidoUseCase = new SalvarPedidoUseCaseImpl(pedidoGateway, buscarProdutoUseCase, consultarClienteUseCase, criarPedidoMercadoPagoUseCase);
-        this.consultarPedidoUseCase = new ConsultarPedidoUseCaseImpl(pedidoGateway, consultarClienteUseCase, consultarPagamentoUseCase);
+        this.salvarPedidoUseCase = new SalvarPedidoUseCaseImpl(pedidoGateway, buscarProdutoUseCase, criarPedidoMercadoPagoUseCase);
+        this.consultarPedidoUseCase = new ConsultarPedidoUseCaseImpl(pedidoGateway);
         this.requestPedidoMapper = requestPedidoMapper;
         this.pedidoPresenter = pedidoPresenter;
     }
@@ -76,17 +67,15 @@ public class PedidoControllerImpl implements PedidoController {
     }
 
     @Override
-    public PedidoResponseDto criarPedido(PedidoRequestDto pedidoRequestDto) {
-        Pedido pedido = salvarPedidoUseCase.criarPedido(requestPedidoMapper.pedidoRequestDtoParaPedido(pedidoRequestDto));
+    public PedidoResponseDto criarPedido(PedidoRequestDto pedidoRequestDto, String idCliente) {
+        Pedido pedido = salvarPedidoUseCase.criarPedido(requestPedidoMapper.pedidoRequestDtoParaPedido(pedidoRequestDto), idCliente);
 
         return pedidoPresenter.pedidoParaPedidoResponseDTO(pedido);
     }
 
     @Override
-    public PedidoResponseDto atualizarStatusPedido(PedidoStatusRequestDto pedidoStatusRequestDTO, String id) {
-        StatusPedidoEnum statusPedidoEnum = pedidoPresenter.statusPedidoParaStatusPedidoEnum(pedidoStatusRequestDTO.getStatus());
-
-        Pedido pedido = salvarPedidoUseCase.atualizarStatusPedido(statusPedidoEnum, pedidoStatusRequestDTO.getCodigoPagamento(), id);
+    public PedidoResponseDto atualizarPedidoRecebido(PedidoRecebidoRequestDto pedidoRecebidoRequestDTO, String idPedido) {
+        Pedido pedido = salvarPedidoUseCase.atualizarPedidoRecebido(idPedido, pedidoRecebidoRequestDTO.getCodigoPagamento());
 
         return pedidoPresenter.pedidoParaPedidoResponseDTO(pedido);
     }

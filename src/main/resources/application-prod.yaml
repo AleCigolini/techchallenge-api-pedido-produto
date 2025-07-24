@@ -11,11 +11,3 @@ spring:
 client:
   pagamento:
     base-url: "http://localhost-prod:8080/pagamentos"
-  cliente:
-    base-url: "http://localhost:8080/clientes"
-  mercado-pago:
-    user_id: 2333300249
-    pos_id: 111092408
-    external_store_id: "FIAP001"
-    external_pos_id: "FIAP001CAIXA001"
-    auth_header: "Bearer APP_USR-3275293218198108-031718-5526fd48d54fa3cf79471546ff5bec1f-2333300249"

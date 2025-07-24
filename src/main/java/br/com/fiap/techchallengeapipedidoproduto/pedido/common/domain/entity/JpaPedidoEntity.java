@@ -41,6 +41,9 @@ public class JpaPedidoEntity extends JpaBaseEntity {
     @Column(name = "id_cliente")
     private String idCliente;
 
+    @Column(name = "id_pagamento")
+    private String idPagamento;
+
     @OneToMany(mappedBy="pedido")
     private List<JpaProdutoPedidoEntity> produtos = new ArrayList<>();
 }

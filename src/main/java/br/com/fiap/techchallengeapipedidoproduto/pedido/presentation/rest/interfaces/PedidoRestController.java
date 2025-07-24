@@ -1,7 +1,7 @@
 package br.com.fiap.techchallengeapipedidoproduto.pedido.presentation.rest.interfaces;
 
 import br.com.fiap.techchallengeapipedidoproduto.pedido.common.domain.dto.request.PedidoRequestDto;
-import br.com.fiap.techchallengeapipedidoproduto.pedido.common.domain.dto.request.PedidoStatusRequestDto;
+import br.com.fiap.techchallengeapipedidoproduto.pedido.common.domain.dto.request.PedidoRecebidoRequestDto;
 import br.com.fiap.techchallengeapipedidoproduto.pedido.common.domain.dto.response.PedidoResponseDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -9,6 +9,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.ResponseEntity;
 
 import java.net.URISyntaxException;
@@ -47,15 +48,15 @@ public interface PedidoRestController {
                             content = @Content(schema = @Schema(ref = "Problema"))
                     ),
             })
-    ResponseEntity<PedidoResponseDto> criarPedido(PedidoRequestDto pedidoRequestDTO) throws URISyntaxException;
+    ResponseEntity<PedidoResponseDto> criarPedido(PedidoRequestDto pedidoRequestDTO, HttpServletRequest request) throws URISyntaxException;
 
     /**
      * Atualizar status do pedido
      *
-     * @param pedidoStatusRequestDTO DTO para atualização do status do pedido
+     * @param pedidoRecebidoRequestDTO DTO para atualização do status do pedido
      * @param id ID do pedido a ter seu status atualizado
      * @return {@link PedidoResponseDto}
      */
     @Operation(summary = "Atualizar o status de um pedido")
-    ResponseEntity<PedidoResponseDto> atualizarStatusPedido(PedidoStatusRequestDto pedidoStatusRequestDTO, String id);
+    ResponseEntity<PedidoResponseDto> atualizarPedidoRecebido(PedidoRecebidoRequestDto pedidoRecebidoRequestDTO, String id);
 }

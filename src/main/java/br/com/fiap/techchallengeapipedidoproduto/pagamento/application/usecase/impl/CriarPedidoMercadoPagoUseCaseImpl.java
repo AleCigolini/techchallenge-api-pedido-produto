@@ -2,7 +2,7 @@ package br.com.fiap.techchallengeapipedidoproduto.pagamento.application.usecase.
 
 import br.com.fiap.techchallengeapipedidoproduto.pagamento.application.usecase.CriarPedidoMercadoPagoUseCase;
 import br.com.fiap.techchallengeapipedidoproduto.pagamento.infrastructure.client.PagamentoClient;
-import br.com.fiap.techchallengeapipedidoproduto.pedido.domain.Pedido;
+import br.com.fiap.techchallengeapipedidoproduto.pedido.common.domain.dto.request.CriarPedidoMercadoPagoRequestDto;
 
 public class CriarPedidoMercadoPagoUseCaseImpl implements CriarPedidoMercadoPagoUseCase {
     private final PagamentoClient pagamentoClient;
@@ -13,17 +13,9 @@ public class CriarPedidoMercadoPagoUseCaseImpl implements CriarPedidoMercadoPago
 
 
     @Override
-    public void criarPedidoMercadoPago(Pedido pedido) {
+    public void criarPedidoMercadoPago(CriarPedidoMercadoPagoRequestDto pedido) {
         try {
-            pagamentoClient.criarPedidoMercadoPago(pedido);
-//            MercadoPagoOrderRequest mercadoPagoOrderRequest = mercadoPagoOrderRequestMapper.pedidoParaMercadoPagoOrderItemRequest(pedido);
-//
-//            mercadoPagoCodigoQRClient.pedidosPresenciaisV2(
-//                    mercadoPagoProperties.getUserId(),
-//                    mercadoPagoProperties.getExternalStoreId(),
-//                    mercadoPagoProperties.getExternalPosId(),
-//                    mercadoPagoProperties.getAuthHeader(),
-//                    mercadoPagoOrderRequest);
+            pagamentoClient.criarPedido(pedido);
         } catch (Exception ex) {
             System.out.printf("Erro ao criar pedido Mercado Pago. Status: %s, Content: %s", ex.getCause(), ex.getMessage());
         }

@@ -3,7 +3,6 @@ package br.com.fiap.techchallengeapipedidoproduto.pedido.application.mapper.mode
 import br.com.fiap.techchallengeapipedidoproduto.core.config.exception.exceptions.ValidacaoEntidadeException;
 import br.com.fiap.techchallengeapipedidoproduto.pedido.application.mapper.RequestPedidoMapper;
 import br.com.fiap.techchallengeapipedidoproduto.pedido.common.domain.dto.request.PedidoRequestDto;
-import br.com.fiap.techchallengeapipedidoproduto.pedido.common.domain.dto.request.PedidoStatusRequestDto;
 import br.com.fiap.techchallengeapipedidoproduto.pedido.domain.Pedido;
 import lombok.AllArgsConstructor;
 import org.modelmapper.MappingException;
@@ -25,15 +24,5 @@ public class RequestPedidoModelMapper implements RequestPedidoMapper {
             }
             throw e;
         }
-    }
-
-    @Override
-    public Pedido pedidoStatusRequestDtoParaPedido(PedidoStatusRequestDto pedidoStatusRequestDto, String id) {
-
-        Pedido pedido = new Pedido();
-        pedido.setId(id);
-        pedido.setStatus(pedidoStatusRequestDto.getStatus());
-
-        return pedido;
     }
 }

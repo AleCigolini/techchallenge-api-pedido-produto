@@ -1,6 +1,5 @@
 package br.com.fiap.techchallengeapipedidoproduto.pedido.application.mapper.model;
 
-import br.com.fiap.techchallengeapipedidoproduto.cliente.domain.Cliente;
 import br.com.fiap.techchallengeapipedidoproduto.pedido.common.domain.entity.JpaPedidoEntity;
 import br.com.fiap.techchallengeapipedidoproduto.pedido.domain.Pedido;
 import org.junit.jupiter.api.AfterEach;
@@ -37,7 +36,6 @@ public class DatabasePedidoModelMapperTest {
     public void deveConverterPedidoParaJpaPedidoEntity() {
         // given
         Pedido pedido = new Pedido();
-        pedido.setCliente(new Cliente());
         when(modelMapper.map(pedido, JpaPedidoEntity.class)).thenReturn(new JpaPedidoEntity());
 
         // when

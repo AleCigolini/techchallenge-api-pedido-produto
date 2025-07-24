@@ -55,7 +55,7 @@ CREATE TABLE pedido
     id_cliente       UUID,
     preco            DECIMAL(10, 2) NOT NULL DEFAULT 00.00,
     observacao       VARCHAR(255)   NULL,
-    cd_pagamento     VARCHAR(255)   NULL,
+    id_pagamento     UUID,
     data_criacao     TIMESTAMPTZ    NOT NULL DEFAULT NOW(),
     data_atualizacao TIMESTAMPTZ    NOT NULL DEFAULT NOW()
 );
@@ -87,17 +87,17 @@ VALUES ('e389406d-5531-4acf-a354-be5cc46a8ca1', 'Hamburguer', 'Pão, queijo, alf
 
 -- Inserção de pedido na tabela pedido
 INSERT INTO pedido
-    (id, codigo, status, id_cliente, preco, observacao, data_criacao)
+    (id, codigo, status, id_cliente, preco, observacao, id_pagamento, data_criacao)
 VALUES ('e389406d-5531-4acf-a354-be5cc46a8cb1', 'XK8JL', 'RECEBIDO', 'e389406d-5531-4acf-a354-be5cc46a8cd4', 100.00,
-        'Trazer bem embalado', NOW()),
+        'Trazer bem embalado', 'e389406d-5531-4acf-a354-be5cc46a8cd2',NOW()),
        ('e389406d-5531-4acf-a354-be5cc46a8cb4', 'XK8JF', 'RECEBIDO', 'e389406d-5531-4acf-a354-be5cc46a8cd4', 100.00,
-        'Trazer bem embalado', NOW() + INTERVAL '3 minutes'),
+        'Trazer bem embalado', 'e389406d-5531-4acf-a354-be5cc46a8c32',NOW() + INTERVAL '3 minutes'),
        ('e389406d-5531-4acf-a354-be5cc46a8cb2', 'I7LXA', 'EM_PREPARACAO', 'e389406d-5531-4acf-a354-be5cc46a8cd4',
-        110.00, 'Estarei na frente da casa', NOW()),
+        110.00, 'Estarei na frente da casa', 'e389406d-5531-4acf-a354-be5cc46a84d2',NOW()),
        ('e389406d-5531-4acf-a354-be5cc46a8cb5', 'I7LXB', 'EM_PREPARACAO', 'e389406d-5531-4acf-a354-be5cc46a8cd4',
-        110.00, null, NOW() - INTERVAL '1 minutes'),
+        110.00, null, 'e389406d-5531-4acf-a354-be5cc4628cd2',NOW() - INTERVAL '1 minutes'),
        ('e389406d-5531-4acf-a354-be5cc46a8cb3', 'M0I2W', 'FINALIZADO', 'e389406d-5531-4acf-a354-be5cc46a8cd4', 120.00,
-        null, NOW());
+        null, 'e389406d-5531-4acf-a354-be5cc12a8cd2',NOW());
 
 -- Inserção de produtos no pedido na tabela produto_pedido
 INSERT INTO produto_pedido

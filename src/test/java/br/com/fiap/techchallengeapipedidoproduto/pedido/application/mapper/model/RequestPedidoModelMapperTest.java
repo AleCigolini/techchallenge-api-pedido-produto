@@ -2,7 +2,6 @@ package br.com.fiap.techchallengeapipedidoproduto.pedido.application.mapper.mode
 
 import br.com.fiap.techchallengeapipedidoproduto.core.config.exception.exceptions.ValidacaoEntidadeException;
 import br.com.fiap.techchallengeapipedidoproduto.pedido.common.domain.dto.request.PedidoRequestDto;
-import br.com.fiap.techchallengeapipedidoproduto.pedido.common.domain.dto.request.PedidoStatusRequestDto;
 import br.com.fiap.techchallengeapipedidoproduto.pedido.domain.Pedido;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -71,21 +70,5 @@ public class RequestPedidoModelMapperTest {
         // when
         // then
         assertThrows(MappingException.class, () -> mapper.pedidoRequestDtoParaPedido(pedidoRequestDto));
-    }
-
-    @Test
-    public void deveConverterPedidoStatusRequestDtoParaPedido() {
-        // given
-        PedidoStatusRequestDto pedidoStatusRequestDto = new PedidoStatusRequestDto();
-        pedidoStatusRequestDto.setStatus("PRONTO");
-        String id = "123";
-
-        // when
-        Pedido result = mapper.pedidoStatusRequestDtoParaPedido(pedidoStatusRequestDto, id);
-
-        // then
-        assertNotNull(result);
-        assertEquals(id, result.getId());
-        assertEquals("PRONTO", result.getStatus());
     }
 }

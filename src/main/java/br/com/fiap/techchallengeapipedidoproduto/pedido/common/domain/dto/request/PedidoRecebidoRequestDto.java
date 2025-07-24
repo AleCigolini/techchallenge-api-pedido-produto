@@ -4,10 +4,7 @@ import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
 @Data
-public class PedidoStatusRequestDto {
-
+public class PedidoRecebidoRequestDto {
     @NotBlank
-    private String status;
-
     private String codigoPagamento;
 }
