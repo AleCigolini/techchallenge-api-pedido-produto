@@ -68,4 +68,4 @@ Dado que um novo pedido é criado no serviço de pedidos
 <br>
 Quando o serviço de pedidos envia os dados do pedido para o serviço de pagamento
 <br>
-Então um pedido correspondente é criado no Mercado Pago
+Então pedido correspondente é criado no Mercado Pago
