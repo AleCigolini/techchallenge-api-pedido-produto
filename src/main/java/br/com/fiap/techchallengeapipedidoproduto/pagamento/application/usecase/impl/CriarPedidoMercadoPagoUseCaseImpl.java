@@ -2,7 +2,7 @@ package br.com.fiap.techchallengeapipedidoproduto.pagamento.application.usecase.
 
 import br.com.fiap.techchallengeapipedidoproduto.pagamento.application.usecase.CriarPedidoMercadoPagoUseCase;
 import br.com.fiap.techchallengeapipedidoproduto.pagamento.infrastructure.client.PagamentoClient;
-import br.com.fiap.techchallengeapipedidoproduto.pedido.common.domain.dto.request.CriarPedidoMercadoPagoRequestDto;
+import br.com.fiap.techchallengeapipedidoproduto.pagamento.common.domain.dto.request.CriarPedidoMercadoPagoRequestDTO;
 
 public class CriarPedidoMercadoPagoUseCaseImpl implements CriarPedidoMercadoPagoUseCase {
     private final PagamentoClient pagamentoClient;
@@ -13,7 +13,7 @@ public class CriarPedidoMercadoPagoUseCaseImpl implements CriarPedidoMercadoPago
 
 
     @Override
-    public void criarPedidoMercadoPago(CriarPedidoMercadoPagoRequestDto pedido) {
+    public void criarPedidoMercadoPago(CriarPedidoMercadoPagoRequestDTO pedido) {
         try {
             pagamentoClient.criarPedido(pedido);
         } catch (Exception ex) {

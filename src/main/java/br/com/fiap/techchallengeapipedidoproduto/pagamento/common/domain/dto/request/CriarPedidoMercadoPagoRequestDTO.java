@@ -1,6 +1,5 @@
-package br.com.fiap.techchallengeapipedidoproduto.pedido.common.domain.dto.request;
+package br.com.fiap.techchallengeapipedidoproduto.pagamento.common.domain.dto.request;
 
-import br.com.fiap.techchallengeapipedidoproduto.pedido.domain.ProdutoPedido;
 import lombok.Builder;
 import lombok.Data;
 
@@ -10,11 +9,11 @@ import java.util.UUID;
 
 @Data
 @Builder
-public class CriarPedidoMercadoPagoRequestDto {
+public class CriarPedidoMercadoPagoRequestDTO {
     private String codigoPedido;
     private String codigo;
     private BigDecimal preco;
     private UUID codigoCliente;
-    private List<ProdutoPedido> produtos;
+    private List<ProdutoMercadoPagoRequestDTO> produtos;
 }
 

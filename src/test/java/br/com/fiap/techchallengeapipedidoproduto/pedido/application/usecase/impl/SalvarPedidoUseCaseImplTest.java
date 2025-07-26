@@ -2,12 +2,13 @@ package br.com.fiap.techchallengeapipedidoproduto.pedido.application.usecase.imp
 
 import br.com.fiap.techchallengeapipedidoproduto.pagamento.application.usecase.CriarPedidoMercadoPagoUseCase;
 import br.com.fiap.techchallengeapipedidoproduto.pedido.application.gateway.PedidoGateway;
-import br.com.fiap.techchallengeapipedidoproduto.pedido.common.domain.dto.request.CriarPedidoMercadoPagoRequestDto;
+import br.com.fiap.techchallengeapipedidoproduto.pagamento.common.domain.dto.request.CriarPedidoMercadoPagoRequestDTO;
 import br.com.fiap.techchallengeapipedidoproduto.pedido.common.domain.exception.PedidoNaoEncontradoException;
 import br.com.fiap.techchallengeapipedidoproduto.pedido.domain.Pedido;
 import br.com.fiap.techchallengeapipedidoproduto.pedido.domain.ProdutoPedido;
 import br.com.fiap.techchallengeapipedidoproduto.pedido.domain.StatusPedidoEnum;
 import br.com.fiap.techchallengeapipedidoproduto.produto.application.usecase.BuscarProdutoUseCase;
+import br.com.fiap.techchallengeapipedidoproduto.produto.domain.CategoriaProduto;
 import br.com.fiap.techchallengeapipedidoproduto.produto.domain.Produto;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -53,6 +54,8 @@ public class SalvarPedidoUseCaseImplTest {
     public void deveCriarPedidoComSucesso() {
         // given
         Pedido pedido = new Pedido();
+        CategoriaProduto categoriaProduto = new CategoriaProduto();
+        categoriaProduto.setNome("Categoria");
 
         // Criar lista de produtos para o pedido
         List<ProdutoPedido> produtos = new ArrayList<>();
@@ -61,6 +64,7 @@ public class SalvarPedidoUseCaseImplTest {
         produto.setId("1");
         produto.setNome("X-Burguer");
         produto.setPreco(new BigDecimal("25.90"));
+        produto.setCategoria(categoriaProduto);
         produtoPedido.setProduto(produto);
         produtoPedido.setQuantidade(Long.valueOf("2"));
         produtoPedido.setObservacao("Sem cebola");
@@ -74,7 +78,7 @@ public class SalvarPedidoUseCaseImplTest {
             p.setId("pedido-123");
             return p;
         });
-        doNothing().when(criarPedidoMercadoPagoUseCase).criarPedidoMercadoPago(any(CriarPedidoMercadoPagoRequestDto.class));
+        doNothing().when(criarPedidoMercadoPagoUseCase).criarPedidoMercadoPago(any(CriarPedidoMercadoPagoRequestDTO.class));
 
         // when
         Pedido resultado = salvarPedidoUseCase.criarPedido(pedido, UUID.randomUUID().toString());
@@ -89,7 +93,7 @@ public class SalvarPedidoUseCaseImplTest {
         // Verificar chamadas aos mocks
         verify(buscarProdutoUseCase).buscarProdutoPorId("1");
         verify(pedidoGateway).criarPedido(any(Pedido.class));
-        verify(criarPedidoMercadoPagoUseCase).criarPedidoMercadoPago(any(CriarPedidoMercadoPagoRequestDto.class));
+        verify(criarPedidoMercadoPagoUseCase).criarPedidoMercadoPago(any(CriarPedidoMercadoPagoRequestDTO.class));
     }
 
     @Test

@@ -2,7 +2,7 @@ package br.com.fiap.techchallengeapipedidoproduto.pedido.application.usecase.imp
 
 import br.com.fiap.techchallengeapipedidoproduto.pagamento.application.usecase.impl.CriarPedidoMercadoPagoUseCaseImpl;
 import br.com.fiap.techchallengeapipedidoproduto.pagamento.infrastructure.client.PagamentoClient;
-import br.com.fiap.techchallengeapipedidoproduto.pedido.common.domain.dto.request.CriarPedidoMercadoPagoRequestDto;
+import br.com.fiap.techchallengeapipedidoproduto.pagamento.common.domain.dto.request.CriarPedidoMercadoPagoRequestDTO;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -30,7 +30,7 @@ public class CriarPedidoMercadoPagoUseCaseImplTest {
     public void deveCriarPedidoMercadoPagoComSucesso() {
         // given
         Mockito.when(pagamentoClient.criarPedido(any())).thenReturn(null);
-        CriarPedidoMercadoPagoRequestDto criarPedidoMercadoPagoRequestDto = CriarPedidoMercadoPagoRequestDto.builder().build();
+        CriarPedidoMercadoPagoRequestDTO criarPedidoMercadoPagoRequestDto = CriarPedidoMercadoPagoRequestDTO.builder().build();
 
         // when
         criarPedidoMercadoPagoUseCase.criarPedidoMercadoPago(criarPedidoMercadoPagoRequestDto);

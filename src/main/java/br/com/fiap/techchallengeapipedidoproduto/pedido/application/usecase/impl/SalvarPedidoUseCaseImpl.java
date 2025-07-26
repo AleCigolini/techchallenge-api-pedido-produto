@@ -1,9 +1,10 @@
 package br.com.fiap.techchallengeapipedidoproduto.pedido.application.usecase.impl;
 
 import br.com.fiap.techchallengeapipedidoproduto.pagamento.application.usecase.CriarPedidoMercadoPagoUseCase;
+import br.com.fiap.techchallengeapipedidoproduto.pagamento.common.domain.dto.request.ProdutoMercadoPagoRequestDTO;
 import br.com.fiap.techchallengeapipedidoproduto.pedido.application.gateway.PedidoGateway;
 import br.com.fiap.techchallengeapipedidoproduto.pedido.application.usecase.SalvarPedidoUseCase;
-import br.com.fiap.techchallengeapipedidoproduto.pedido.common.domain.dto.request.CriarPedidoMercadoPagoRequestDto;
+import br.com.fiap.techchallengeapipedidoproduto.pagamento.common.domain.dto.request.CriarPedidoMercadoPagoRequestDTO;
 import br.com.fiap.techchallengeapipedidoproduto.pedido.common.domain.exception.PedidoNaoEncontradoException;
 import br.com.fiap.techchallengeapipedidoproduto.pedido.domain.Pedido;
 import br.com.fiap.techchallengeapipedidoproduto.pedido.domain.ProdutoPedido;
@@ -40,12 +41,24 @@ public class SalvarPedidoUseCaseImpl implements SalvarPedidoUseCase {
         montarPedido(pedido, idCliente);
         Pedido pedidoCriado = pedidoGateway.criarPedido(pedido);
 
-        var criarPedidoMercadoPagoRequestDto = CriarPedidoMercadoPagoRequestDto.builder()
+        List<ProdutoMercadoPagoRequestDTO> produtosRequestDTO = pedidoCriado.getProdutos().stream().map(produtoPedido ->
+                new ProdutoMercadoPagoRequestDTO(
+                        produtoPedido.getProduto().getId(),
+                        produtoPedido.getProduto().getNome(),
+                        produtoPedido.getProduto().getDescricao(),
+                        produtoPedido.getProduto().getCategoria().getNome(),
+                        produtoPedido.getProduto().getPreco(),
+                        produtoPedido.getObservacao(),
+                        produtoPedido.getQuantidade()
+                )
+        ).toList();
+
+        var criarPedidoMercadoPagoRequestDto = CriarPedidoMercadoPagoRequestDTO.builder()
                 .codigoPedido(pedidoCriado.getId())
                 .codigo(pedidoCriado.getCodigo())
                 .preco(pedidoCriado.getPreco())
                 .codigoCliente(pedidoCriado.getIdCliente())
-                .produtos(pedidoCriado.getProdutos())
+                .produtos(produtosRequestDTO)
                 .build();
 
         criarPedidoMercadoPagoUseCase.criarPedidoMercadoPago(criarPedidoMercadoPagoRequestDto);
