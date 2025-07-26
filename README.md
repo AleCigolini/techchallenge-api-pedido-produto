@@ -52,3 +52,20 @@ O projeto segue uma arquitetura moderna e organizada, contendo:
 
 ## Cobertura Sonar
 ![sonar.png](src/main/resources/static/sonar.png)
+
+## BDD - Behavior-Driven Development
+Funcionalidade: Integração com serviço de pagamento
+
+Como um cliente do sistema de pedidos
+<br>
+Quero que, ao criar um novo pedido, o serviço de pagamento seja acionado automaticamente
+<br>
+Para que seja gerado um QR Code de pagamento no Mercado Pago
+
+Cenário: Criação de pedido e geração de QR Code de pagamento
+<br>
+Dado que um novo pedido é criado no serviço de pedidos
+<br>
+Quando o serviço de pedidos envia os dados do pedido para o serviço de pagamento
+<br>
+Então pedido correspondente é criado no Mercado Pago
