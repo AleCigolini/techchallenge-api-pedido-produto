@@ -49,31 +49,6 @@ spec:
                 secretKeyRef:
                   name: app-secret
                   key: POSTGRES_PASSWORD
-            - name: CLIENT_MERCADO_PAGO_USER_ID
-              valueFrom:
-                secretKeyRef:
-                  name: app-secret
-                  key: MP_USER_ID
-            - name: CLIENT_MERCADO_PAGO_POS_ID
-              valueFrom:
-                secretKeyRef:
-                  name: app-secret
-                  key: MP_POS_ID
-            - name: CLIENT_MERCADO_PAGO_EXTERNAL_STORE_ID
-              valueFrom:
-                secretKeyRef:
-                  name: app-secret
-                  key: MP_EXTERNAL_STORE_ID
-            - name: CLIENT_MERCADO_PAGO_EXTERNAL_POS_ID
-              valueFrom:
-                secretKeyRef:
-                  name: app-secret
-                  key: MP_EXTERNAL_POS_ID
-            - name: CLIENT_MERCADO_PAGO_AUTH_HEADER
-              valueFrom:
-                secretKeyRef:
-                  name: app-secret
-                  key: MP_AUTH_HEADER
           resources:
             requests:
               cpu: "400m"

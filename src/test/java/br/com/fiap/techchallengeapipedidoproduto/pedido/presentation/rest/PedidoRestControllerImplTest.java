@@ -1,8 +1,7 @@
 package br.com.fiap.techchallengeapipedidoproduto.pedido.presentation.rest;
 
 import br.com.fiap.techchallengeapipedidoproduto.pedido.application.controller.PedidoController;
-import br.com.fiap.techchallengeapipedidoproduto.pedido.common.domain.dto.request.PedidoRequestDto;
-import br.com.fiap.techchallengeapipedidoproduto.pedido.common.domain.dto.request.PedidoStatusRequestDto;
+import br.com.fiap.techchallengeapipedidoproduto.pedido.common.domain.dto.request.PedidoRecebidoRequestDto;
 import br.com.fiap.techchallengeapipedidoproduto.pedido.common.domain.dto.response.PedidoResponseDto;
 import br.com.fiap.techchallengeapipedidoproduto.pedido.domain.StatusPedidoEnum;
 import org.junit.jupiter.api.AfterEach;
@@ -13,7 +12,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import java.math.BigDecimal;
-import java.net.URISyntaxException;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -84,45 +82,25 @@ public class PedidoRestControllerImplTest {
     }
 
     @Test
-    public void deveCriarPedidoRetornandoCreated() throws URISyntaxException {
-        // given
-        PedidoRequestDto pedidoRequest = new PedidoRequestDto();
-        String idPedido = UUID.randomUUID().toString();
-        PedidoResponseDto pedidoResponse = criarPedidoResponseDto(idPedido, "ABC123", StatusPedidoEnum.ABERTO.toString());
-
-        when(pedidoController.criarPedido(pedidoRequest)).thenReturn(pedidoResponse);
-
-        // when
-        ResponseEntity<PedidoResponseDto> response = restController.criarPedido(pedidoRequest);
-
-        // then
-        assertEquals(HttpStatus.CREATED, response.getStatusCode());
-        assertEquals(pedidoResponse, response.getBody());
-        assertNotNull(response.getHeaders().getLocation());
-        assertEquals("/pedidos/" + idPedido, response.getHeaders().getLocation().getPath());
-        verify(pedidoController).criarPedido(pedidoRequest);
-    }
-
-    @Test
-    public void deveAtualizarStatusPedidoRetornandoOk() {
+    public void deveAtualizarPedidoRecebidoRetornandoOk() {
         // given
         String idPedido = UUID.randomUUID().toString();
-        PedidoStatusRequestDto statusRequest = new PedidoStatusRequestDto();
-        statusRequest.setStatus(StatusPedidoEnum.RECEBIDO.toString());
+        PedidoRecebidoRequestDto pedidoRecebidoRequestDto = new PedidoRecebidoRequestDto();
+        pedidoRecebidoRequestDto.setCodigoPagamento("123");
 
         PedidoResponseDto pedidoResponse = criarPedidoResponseDto(idPedido, "ABC123", StatusPedidoEnum.RECEBIDO.toString());
 
-        when(pedidoController.atualizarStatusPedido(statusRequest, idPedido)).thenReturn(pedidoResponse);
+        when(pedidoController.atualizarPedidoRecebido(pedidoRecebidoRequestDto, idPedido)).thenReturn(pedidoResponse);
 
         // when
-        ResponseEntity<PedidoResponseDto> response = restController.atualizarStatusPedido(statusRequest, idPedido);
+        ResponseEntity<PedidoResponseDto> response = restController.atualizarPedidoRecebido(pedidoRecebidoRequestDto, idPedido);
 
         // then
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(pedidoResponse, response.getBody());
         assertNotNull(response.getBody());
         assertEquals(StatusPedidoEnum.RECEBIDO.toString(), response.getBody().getStatus().toString());
-        verify(pedidoController).atualizarStatusPedido(statusRequest, idPedido);
+        verify(pedidoController).atualizarPedidoRecebido(pedidoRecebidoRequestDto, idPedido);
     }
 
     private PedidoResponseDto criarPedidoResponseDto(String id, String codigo, String status) {

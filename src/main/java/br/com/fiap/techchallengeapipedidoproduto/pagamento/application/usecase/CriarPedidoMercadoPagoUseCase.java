@@ -1,9 +1,9 @@
 package br.com.fiap.techchallengeapipedidoproduto.pagamento.application.usecase;
 
 
-import br.com.fiap.techchallengeapipedidoproduto.pedido.domain.Pedido;
+import br.com.fiap.techchallengeapipedidoproduto.pagamento.common.domain.dto.request.CriarPedidoMercadoPagoRequestDTO;
 
 public interface CriarPedidoMercadoPagoUseCase {
 
-    void criarPedidoMercadoPago(Pedido pedido);
+    void criarPedidoMercadoPago(CriarPedidoMercadoPagoRequestDTO pedido);
 }

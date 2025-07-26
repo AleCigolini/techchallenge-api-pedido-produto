@@ -1,13 +1,14 @@
 package br.com.fiap.techchallengeapipedidoproduto.pedido.application.usecase.impl;
 
-import br.com.fiap.techchallengeapipedidoproduto.cliente.application.usecase.ConsultarClienteUseCase;
 import br.com.fiap.techchallengeapipedidoproduto.pagamento.application.usecase.CriarPedidoMercadoPagoUseCase;
 import br.com.fiap.techchallengeapipedidoproduto.pedido.application.gateway.PedidoGateway;
+import br.com.fiap.techchallengeapipedidoproduto.pagamento.common.domain.dto.request.CriarPedidoMercadoPagoRequestDTO;
 import br.com.fiap.techchallengeapipedidoproduto.pedido.common.domain.exception.PedidoNaoEncontradoException;
 import br.com.fiap.techchallengeapipedidoproduto.pedido.domain.Pedido;
 import br.com.fiap.techchallengeapipedidoproduto.pedido.domain.ProdutoPedido;
 import br.com.fiap.techchallengeapipedidoproduto.pedido.domain.StatusPedidoEnum;
 import br.com.fiap.techchallengeapipedidoproduto.produto.application.usecase.BuscarProdutoUseCase;
+import br.com.fiap.techchallengeapipedidoproduto.produto.domain.CategoriaProduto;
 import br.com.fiap.techchallengeapipedidoproduto.produto.domain.Produto;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -18,6 +19,7 @@ import org.mockito.Mockito;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
@@ -35,12 +37,10 @@ public class SalvarPedidoUseCaseImplTest {
         pedidoGateway = Mockito.mock(PedidoGateway.class);
         buscarProdutoUseCase = Mockito.mock(BuscarProdutoUseCase.class);
         criarPedidoMercadoPagoUseCase = Mockito.mock(CriarPedidoMercadoPagoUseCase.class);
-        ConsultarClienteUseCase consultarClienteUseCase = Mockito.mock(ConsultarClienteUseCase.class);
 
         salvarPedidoUseCase = new SalvarPedidoUseCaseImpl(
                 pedidoGateway,
                 buscarProdutoUseCase,
-                consultarClienteUseCase,
                 criarPedidoMercadoPagoUseCase
         );
     }
@@ -54,6 +54,8 @@ public class SalvarPedidoUseCaseImplTest {
     public void deveCriarPedidoComSucesso() {
         // given
         Pedido pedido = new Pedido();
+        CategoriaProduto categoriaProduto = new CategoriaProduto();
+        categoriaProduto.setNome("Categoria");
 
         // Criar lista de produtos para o pedido
         List<ProdutoPedido> produtos = new ArrayList<>();
@@ -62,6 +64,7 @@ public class SalvarPedidoUseCaseImplTest {
         produto.setId("1");
         produto.setNome("X-Burguer");
         produto.setPreco(new BigDecimal("25.90"));
+        produto.setCategoria(categoriaProduto);
         produtoPedido.setProduto(produto);
         produtoPedido.setQuantidade(Long.valueOf("2"));
         produtoPedido.setObservacao("Sem cebola");
@@ -75,10 +78,10 @@ public class SalvarPedidoUseCaseImplTest {
             p.setId("pedido-123");
             return p;
         });
-        doNothing().when(criarPedidoMercadoPagoUseCase).criarPedidoMercadoPago(any(Pedido.class));
+        doNothing().when(criarPedidoMercadoPagoUseCase).criarPedidoMercadoPago(any(CriarPedidoMercadoPagoRequestDTO.class));
 
         // when
-        Pedido resultado = salvarPedidoUseCase.criarPedido(pedido);
+        Pedido resultado = salvarPedidoUseCase.criarPedido(pedido, UUID.randomUUID().toString());
 
         // then
         assertNotNull(resultado);
@@ -90,7 +93,7 @@ public class SalvarPedidoUseCaseImplTest {
         // Verificar chamadas aos mocks
         verify(buscarProdutoUseCase).buscarProdutoPorId("1");
         verify(pedidoGateway).criarPedido(any(Pedido.class));
-        verify(criarPedidoMercadoPagoUseCase).criarPedidoMercadoPago(any(Pedido.class));
+        verify(criarPedidoMercadoPagoUseCase).criarPedidoMercadoPago(any(CriarPedidoMercadoPagoRequestDTO.class));
     }
 
     @Test
@@ -102,10 +105,11 @@ public class SalvarPedidoUseCaseImplTest {
         pedidoExistente.setStatus(StatusPedidoEnum.ABERTO.toString());
         pedidoExistente.setPreco(new BigDecimal("51.80"));
 
+        UUID idPagamento = UUID.randomUUID();
         Pedido pedidoAtualizado = new Pedido();
         pedidoAtualizado.setId("pedido-123");
         pedidoAtualizado.setStatus(StatusPedidoEnum.RECEBIDO.toString());
-        pedidoAtualizado.setCodigoPagamento("payment-789");
+        pedidoAtualizado.setIdPagamento(idPagamento);
 
         when(pedidoGateway.buscarPedidoPorId("pedido-123")).thenReturn(pedidoExistente);
         when(pedidoGateway.salvarPedido(any(Pedido.class))).thenReturn(pedidoExistente);
@@ -117,7 +121,7 @@ public class SalvarPedidoUseCaseImplTest {
         assertNotNull(resultado);
         assertEquals("pedido-123", resultado.getId());
         assertEquals(StatusPedidoEnum.RECEBIDO.toString(), resultado.getStatus());
-        assertEquals("payment-789", resultado.getCodigoPagamento());
+        assertEquals(idPagamento, resultado.getIdPagamento());
 
         // Capturar o argumento passado para salvarPedido para verificações adicionais
         ArgumentCaptor<Pedido> pedidoCaptor = ArgumentCaptor.forClass(Pedido.class);
@@ -126,8 +130,7 @@ public class SalvarPedidoUseCaseImplTest {
 
         assertEquals("pedido-123", pedidoSalvo.getId());
         assertEquals(StatusPedidoEnum.RECEBIDO.toString(), pedidoSalvo.getStatus());
-        assertEquals("payment-789", pedidoSalvo.getCodigoPagamento());
-        // Os outros campos devem permanecer inalterados
+        assertEquals(idPagamento, pedidoSalvo.getIdPagamento());
         assertEquals("ABC123", pedidoSalvo.getCodigo());
         assertEquals(new BigDecimal("51.80"), pedidoSalvo.getPreco());
     }
@@ -146,11 +149,11 @@ public class SalvarPedidoUseCaseImplTest {
     }
 
     @Test
-    public void deveAtualizarStatusPedidoComSucesso() {
+    public void deveAtualizarPedidoRecebidoComSucesso() {
         // given
         String idPedido = "pedido-123";
-        StatusPedidoEnum novoStatus = StatusPedidoEnum.FINALIZADO;
-        String codigoPagamento = "123456";
+        StatusPedidoEnum novoStatus = StatusPedidoEnum.RECEBIDO;
+        String idPagamento = UUID.randomUUID().toString();
 
         Pedido pedidoExistente = new Pedido();
         pedidoExistente.setId(idPedido);
@@ -161,7 +164,7 @@ public class SalvarPedidoUseCaseImplTest {
         when(pedidoGateway.salvarPedido(any(Pedido.class))).thenReturn(pedidoExistente);
 
         // when
-        Pedido resultado = salvarPedidoUseCase.atualizarStatusPedido(novoStatus, codigoPagamento, idPedido);
+        Pedido resultado = salvarPedidoUseCase.atualizarPedidoRecebido(idPedido, idPagamento);
 
         // then
         assertNotNull(resultado);
@@ -216,7 +219,7 @@ public class SalvarPedidoUseCaseImplTest {
         when(buscarProdutoUseCase.buscarProdutoPorId("2")).thenReturn(produtoCompleto2);
 
         // when
-        salvarPedidoUseCase.montarPedido(pedido);
+        salvarPedidoUseCase.montarPedido(pedido, UUID.randomUUID().toString());
 
         // then
         assertNotNull(pedido.getCodigo());

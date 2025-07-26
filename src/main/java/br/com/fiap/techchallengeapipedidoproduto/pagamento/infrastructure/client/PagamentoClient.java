@@ -1,28 +1,14 @@
 package br.com.fiap.techchallengeapipedidoproduto.pagamento.infrastructure.client;
 
-import br.com.fiap.techchallengeapipedidoproduto.pagamento.common.domain.dto.request.PagamentoPendenteRequestDTO;
-import br.com.fiap.techchallengeapipedidoproduto.pagamento.domain.Pagamento;
-import br.com.fiap.techchallengeapipedidoproduto.pedido.domain.Pedido;
+import br.com.fiap.techchallengeapipedidoproduto.pagamento.common.domain.dto.request.CriarPedidoMercadoPagoRequestDTO;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-
-import java.util.List;
 
 @FeignClient(name = "PagamentoClient", url = "${client.pagamento.base-url}")
 public interface PagamentoClient {
 
-    @PostMapping("/salvar")
-    ResponseEntity<Pagamento> salvarPagamento(@RequestBody Pagamento pagamento);
-
-    @PostMapping("/salvar-pagamento-pendente")
-    void criarPagamentoPendenteParaOPedido(@RequestBody PagamentoPendenteRequestDTO pagamentoPendenteRequestDTO);
-
-    @GetMapping("/buscar-pagamentos-por-pedido")
-    ResponseEntity<List<Pagamento>> buscarPagamentosPorPedido(@RequestBody String idPedido);
-
-    @PostMapping("/criar-pedido-mercado-pago")
-    ResponseEntity<Void> criarPedidoMercadoPago(@RequestBody Pedido pedido);
+    @PostMapping("/criar-pedido")
+    ResponseEntity<Void> criarPedido(@RequestBody CriarPedidoMercadoPagoRequestDTO pedido);
 }

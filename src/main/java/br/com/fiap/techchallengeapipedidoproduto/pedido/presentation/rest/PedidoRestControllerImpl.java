@@ -1,10 +1,11 @@
 package br.com.fiap.techchallengeapipedidoproduto.pedido.presentation.rest;
 
 import br.com.fiap.techchallengeapipedidoproduto.pedido.application.controller.PedidoController;
+import br.com.fiap.techchallengeapipedidoproduto.pedido.common.domain.dto.request.PedidoRecebidoRequestDto;
 import br.com.fiap.techchallengeapipedidoproduto.pedido.common.domain.dto.request.PedidoRequestDto;
-import br.com.fiap.techchallengeapipedidoproduto.pedido.common.domain.dto.request.PedidoStatusRequestDto;
 import br.com.fiap.techchallengeapipedidoproduto.pedido.common.domain.dto.response.PedidoResponseDto;
 import br.com.fiap.techchallengeapipedidoproduto.pedido.presentation.rest.interfaces.PedidoRestController;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -31,16 +32,17 @@ public class PedidoRestControllerImpl implements PedidoRestController {
 
     @Override
     @PostMapping
-    public ResponseEntity<PedidoResponseDto> criarPedido(@RequestBody @Valid PedidoRequestDto pedidoRequestDTO) throws URISyntaxException {
-        PedidoResponseDto pedidoResponse = pedidoController.criarPedido(pedidoRequestDTO);
+    public ResponseEntity<PedidoResponseDto> criarPedido(@RequestBody @Valid PedidoRequestDto pedidoRequestDTO, HttpServletRequest request) throws URISyntaxException {
+        String idCliente = request.getHeader("x-cliente-id");
+        PedidoResponseDto pedidoResponse = pedidoController.criarPedido(pedidoRequestDTO, idCliente);
 
         return ResponseEntity.created(new URI("/pedidos/" + pedidoResponse.getId())).body(pedidoResponse);
     }
 
     @Override
-    @PatchMapping("/{id}")
-    public ResponseEntity<PedidoResponseDto> atualizarStatusPedido(@RequestBody @Valid PedidoStatusRequestDto pedidoStatusRequestDTO, @PathVariable String id) {
-        PedidoResponseDto pedidoResponseDTO = pedidoController.atualizarStatusPedido(pedidoStatusRequestDTO, id);
+    @PatchMapping("/recebido/{id}")
+    public ResponseEntity<PedidoResponseDto> atualizarPedidoRecebido(@RequestBody @Valid PedidoRecebidoRequestDto pedidoRecebidoRequestDTO, @PathVariable String id) {
+        PedidoResponseDto pedidoResponseDTO = pedidoController.atualizarPedidoRecebido(pedidoRecebidoRequestDTO, id);
 
         return ResponseEntity.ok(pedidoResponseDTO);
     }
