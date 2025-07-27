@@ -17,7 +17,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: java_app_pedido_produto
+    container_name: java-app-pedido-produto
     depends_on:
       - postgres
     environment:
