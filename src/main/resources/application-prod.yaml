@@ -10,4 +10,4 @@ spring:
     password: postgres
 client:
   pagamento:
-    base-url: "http://localhost-prod:8080/pagamentos"
+    base-url: "http://java-app-pagamento/pagamentos"
