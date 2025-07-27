@@ -1,4 +1,14 @@
 apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: hpa-role
+  namespace: default
+rules:
+  - apiGroups: ["metrics.k8s.io"]
+    resources: ["pods", "nodes"]
+    verbs: ["get", "list", "watch"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
   name: hpa-metrics-access
@@ -9,5 +19,6 @@ subjects:
     namespace: default
 roleRef:
   kind: Role
-  name: metrics-server-role
+  name: hpa-role
   apiGroup: rbac.authorization.k8s.io
+
