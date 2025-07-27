@@ -39,10 +39,10 @@ public class JpaPedidoEntity extends JpaBaseEntity {
     private String observacao;
 
     @Column(name = "id_cliente")
-    private String idCliente;
+    private UUID idCliente;
 
     @Column(name = "id_pagamento")
-    private String idPagamento;
+    private UUID idPagamento;
 
     @OneToMany(mappedBy="pedido")
     private List<JpaProdutoPedidoEntity> produtos = new ArrayList<>();
