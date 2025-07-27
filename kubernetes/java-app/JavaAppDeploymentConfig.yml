@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: java_app_pedido_produto
+  name: java-app-pedido-produto
 spec:
   replicas: 1
   strategy:
@@ -11,14 +11,14 @@ spec:
       maxUnavailable: 0
   selector:
     matchLabels:
-      app: java_app_pedido_produto
+      app: java-app-pedido-produto
   template:
     metadata:
       labels:
-        app: java_app_pedido_produto
+        app: java-app-pedido-produto
     spec:
       containers:
-        - name: java_app_pedido_produto
+        - name: java-app-pedido-produto
           image: alecigolini/fiap-techchallengeapipedidoproduto:latest
           ports:
             - containerPort: 8080
@@ -72,20 +72,20 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: java_app_pedido_produto
+  name: java-app-pedido-produto
 spec:
   ports:
     - protocol: TCP
       port: 80
       targetPort: 8080
   selector:
-    app: java_app_pedido_produto
+    app: java-app-pedido-produto
   type: ClusterIP
 ---
 apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
-  name: java_app_pedido_produto-hpa
+  name: java-app-pedido-produto-hpa
   namespace: default
 spec:
   maxReplicas: 3
@@ -93,7 +93,7 @@ spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind:  Deployment
-    name: java_app_pedido_produto
+    name: java-app-pedido-produto
   metrics:
     - type: Resource
       resource:
