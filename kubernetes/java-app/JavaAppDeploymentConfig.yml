@@ -38,7 +38,7 @@ spec:
                   name: app-secret
                   key: POSTGRES_PASSWORD
             - name: SPRING_FLYWAY_URL
-              value: jdbc:postgresql://pedido-produto-dev.postgres.database.azure.com:5432/pedido-produto
+              value: jdbc:postgresql://pedido-produto-dev.postgres.database.azure.com:5432/postgres
             - name: SPRING_FLYWAY_USER
               valueFrom:
                 secretKeyRef:
