@@ -29,3 +29,7 @@ tag:
     pedido:
       name: "Pedido"
       description: "API de Pedidos"
+
+server:
+  servlet:
+    context-path: /pedido-produto

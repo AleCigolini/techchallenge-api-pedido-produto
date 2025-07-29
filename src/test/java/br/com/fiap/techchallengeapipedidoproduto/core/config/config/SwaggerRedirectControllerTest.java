@@ -16,7 +16,7 @@ public class SwaggerRedirectControllerTest {
     @Test
     public void deveRedirecionarParaSwagger() {
         String redirectUrl = controller.redirectToSwagger();
-        assertEquals("redirect:/swagger-ui/index.html", redirectUrl, "O URL de redirecionamento deve apontar para a página do Swagger UI");
+        assertEquals("redirect:/pedido-produto/swagger-ui/index.html", redirectUrl, "O URL de redirecionamento deve apontar para a página do Swagger UI");
     }
 
     @Test
@@ -24,8 +24,8 @@ public class SwaggerRedirectControllerTest {
         // Teste com MockMvc
         MockMvc mockMvc = MockMvcBuilders.standaloneSetup(controller).build();
 
-        mockMvc.perform(get("/"))
+        mockMvc.perform(get("/swagger"))
                .andExpect(status().is3xxRedirection())
-               .andExpect(redirectedUrl("/swagger-ui/index.html"));
+               .andExpect(redirectedUrl("/pedido-produto/swagger-ui/index.html"));
     }
 }
