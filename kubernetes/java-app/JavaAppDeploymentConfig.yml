@@ -51,10 +51,10 @@ spec:
                   key: POSTGRES_PASSWORD
           resources:
             requests:
-              cpu: "800m"
-              memory: "1024Mi"
+              cpu: "400m"
+              memory: "512Mi"
             limits:
-              cpu: "800m"
+              cpu: "500m"
               memory: "1024Mi"
           readinessProbe:
             httpGet:
@@ -91,7 +91,7 @@ spec:
   rules:
     - http:
         paths:
-          - path: /pedido-produto
+          - path: /pedidos-produtos
             pathType: Prefix
             backend:
               service:
