@@ -12,6 +12,9 @@ spring:
     deserialization:
       fail-on-unknown-properties: true
       fail-on-ignored-properties: true
+server:
+  servlet:
+    context-path: /pedido-produto
 springdoc:
   api-docs:
     path: /api-docs
