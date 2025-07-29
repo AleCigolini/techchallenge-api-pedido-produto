@@ -91,7 +91,7 @@ spec:
   rules:
     - http:
         paths:
-          - path: /pedidos
+          - path: /pedido-produto
             pathType: Prefix
             backend:
               service:
