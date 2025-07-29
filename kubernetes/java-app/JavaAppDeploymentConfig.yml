@@ -51,10 +51,10 @@ spec:
                   key: POSTGRES_PASSWORD
           resources:
             requests:
-              cpu: "400m"
-              memory: "512Mi"
+              cpu: "800m"
+              memory: "1024Mi"
             limits:
-              cpu: "500m"
+              cpu: "800m"
               memory: "1024Mi"
           readinessProbe:
             httpGet:
@@ -72,7 +72,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: java-app-pedido-produto
+  name: java-app-pedido-produto-service
 spec:
   ports:
     - protocol: TCP
@@ -95,7 +95,7 @@ spec:
             pathType: Prefix
             backend:
               service:
-                name: java-app-pedido-produto
+                name: java-app-pedido-produto-service
                 port:
                   number: 80
 ---
