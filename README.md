@@ -56,7 +56,7 @@ O projeto segue uma arquitetura moderna e organizada, contendo:
 ## BDD - Behavior-Driven Development
 Funcionalidade: Integração com serviço de pagamento
 
-Como um cliente do sistema de pedidos
+Como um cliente fazendo um pedido
 <br>
 Quero que, ao criar um novo pedido, o serviço de pagamento seja acionado automaticamente
 <br>
