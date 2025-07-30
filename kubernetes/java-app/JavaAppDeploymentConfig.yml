@@ -23,6 +23,8 @@ spec:
           ports:
             - containerPort: 8080
           env:
+            - name: SERVER_SERVLET_CONTEXT_PATH
+              value: /pedidos-produtos
             - name: SPRING_PROFILES_ACTIVE
               value: prod
             - name: SPRING_DATASOURCE_URL
@@ -58,13 +60,13 @@ spec:
               memory: "1024Mi"
           readinessProbe:
             httpGet:
-              path: /actuator/health
+              path: /pedidos-produtos/actuator/health
               port: 8080
             initialDelaySeconds: 60
             periodSeconds: 5
           livenessProbe:
             httpGet:
-              path: /actuator/health
+              path: /pedidos-produtos/actuator/health
               port: 8080
             initialDelaySeconds: 60
             periodSeconds: 10
@@ -91,7 +93,7 @@ spec:
   rules:
     - http:
         paths:
-          - path: /
+          - path: /pedidos-produtos
             pathType: Prefix
             backend:
               service:
