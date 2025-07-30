@@ -16,7 +16,7 @@ import java.net.URISyntaxException;
 import java.util.List;
 
 @RestController
-@RequestMapping("/pedidos")
+@RequestMapping("pedidos-produtos/pedidos")
 @RequiredArgsConstructor
 public class PedidoRestControllerImpl implements PedidoRestController {
 
